@@ -3,10 +3,24 @@ package nour.ppts;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.awt.event.*;
 
 public class ProductsWindow extends Window {
 
-    public ProductsWindow() {
+    public MainWindow parent;
+
+    public ProductsWindow(MainWindow parent) {
+        this.parent = parent;
+        
+        //hiding parent until productsWindow is closed
+        parent.setVisible(false);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent windowEvent) {
+                parent.setVisible(true);
+            }
+        });
+        
         medicineTableModel = new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
@@ -34,32 +48,20 @@ public class ProductsWindow extends Window {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButtonRemoveProduct = new javax.swing.JButton();
-        jButtonAddProduct = new javax.swing.JButton();
         jTabbedPane = new javax.swing.JTabbedPane();
         jScrollPaneMedicine = new javax.swing.JScrollPane();
         jTableMedicine = new javax.swing.JTable();
         jScrollPaneOther = new javax.swing.JScrollPane();
         jTableOther = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jButtonRemoveProduct = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
+        jButtonAddProduct = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(51, 51, 51));
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
-
-        jButtonRemoveProduct.setText("Remove Product");
-        jButtonRemoveProduct.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRemoveProductActionPerformed(evt);
-            }
-        });
-
-        jButtonAddProduct.setText("Add Product");
-        jButtonAddProduct.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddProductActionPerformed(evt);
-            }
-        });
 
         jTableMedicine.setModel(medicineTableModel);
         jScrollPaneMedicine.setViewportView(jTableMedicine);
@@ -71,6 +73,13 @@ public class ProductsWindow extends Window {
 
         jTabbedPane.addTab("Other Products", jScrollPaneOther);
 
+        jButtonRemoveProduct.setText("Remove Product");
+        jButtonRemoveProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRemoveProductActionPerformed(evt);
+            }
+        });
+
         jTextField1.setText("Search");
         jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -78,31 +87,64 @@ public class ProductsWindow extends Window {
             }
         });
 
+        jButtonAddProduct.setText("Add Product");
+        jButtonAddProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddProductActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButtonAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
+                        .addComponent(jButtonRemoveProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonAddProduct, jButtonRemoveProduct, jTextField1});
+
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jButtonRemoveProduct)
+                    .addComponent(jButtonAddProduct)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonAddProduct, jButtonRemoveProduct, jTextField1});
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonRemoveProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jPanel2, jTabbedPane});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButtonRemoveProduct)
-                    .addComponent(jButtonAddProduct)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -128,6 +170,7 @@ public class ProductsWindow extends Window {
 
     private void jButtonAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddProductActionPerformed
         // TODO add your handling code here:
+        AddProductWindow w = new AddProductWindow(this);
     }//GEN-LAST:event_jButtonAddProductActionPerformed
 
     private void jButtonRemoveProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveProductActionPerformed
@@ -157,6 +200,7 @@ public class ProductsWindow extends Window {
     private javax.swing.JButton jButtonAddProduct;
     private javax.swing.JButton jButtonRemoveProduct;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPaneMedicine;
     private javax.swing.JScrollPane jScrollPaneOther;
     private javax.swing.JTabbedPane jTabbedPane;

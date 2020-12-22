@@ -1,5 +1,4 @@
 //starting window
-
 package nour.ppts;
 
 public class MainWindow extends Window {
@@ -37,6 +36,9 @@ public class MainWindow extends Window {
                 .addComponent(jButtonReciepts, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonProducts, jButtonReciepts});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -47,12 +49,14 @@ public class MainWindow extends Window {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonProducts, jButtonReciepts});
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProductsActionPerformed
         // TODO add your handling code here:
-        ProductsWindow w = new ProductsWindow();
+        ProductsWindow w = new ProductsWindow(this);
     }//GEN-LAST:event_jButtonProductsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

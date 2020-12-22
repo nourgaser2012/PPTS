@@ -25,9 +25,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButtonProducts" min="-2" pref="208" max="-2" attributes="0"/>
+              <Component id="jButtonProducts" linkSize="1" min="-2" pref="208" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButtonReciepts" min="-2" pref="208" max="-2" attributes="0"/>
+              <Component id="jButtonReciepts" linkSize="1" min="-2" pref="208" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -37,8 +37,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="jButtonProducts" alignment="2" min="-2" pref="71" max="-2" attributes="0"/>
-                  <Component id="jButtonReciepts" alignment="2" min="-2" pref="71" max="-2" attributes="0"/>
+                  <Component id="jButtonProducts" linkSize="2" alignment="2" min="-2" pref="71" max="-2" attributes="0"/>
+                  <Component id="jButtonReciepts" linkSize="2" alignment="2" min="-2" pref="71" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>

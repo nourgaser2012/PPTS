@@ -4,9 +4,10 @@ package nour.ppts;
 import java.sql.*;
 import java.util.ArrayList;
 
-public abstract class Window extends javax.swing.JFrame implements Database {
+public abstract class Window extends javax.swing.JFrame {
 
     public static Connection connection;
+    protected Window parent;
 
     static {
         System.out.println("class Window loading block called...");
@@ -71,9 +72,11 @@ public abstract class Window extends javax.swing.JFrame implements Database {
     }
 
     Window() {
+        System.out.println("Creating new window...");
         setTheme("Nimbus");
         this.setVisible(true);
         setLocation(500, 250);
+        setTitle("PPTS");
         //add any other styling or common functionality for all windows here;
     }
 
