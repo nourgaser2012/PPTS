@@ -56,12 +56,16 @@ public class OtherProduct extends Product {
         String[] arr = new String[numberOfAttributes];
         arr[0] = Integer.toString(getId());
         arr[1] = getName();
-        arr[2] = Double.toString(getPrice());
-        arr[3] = Integer.toString(getStock());
-        arr[4] = Integer.toString(getSerialNumber());
-        arr[5] = getDescription();
-        arr[6] = getImageLocation();
+        arr[3] = Double.toString(getPrice());
+        arr[4] = Integer.toString(getStock());
+        arr[6] = Integer.toString(getSerialNumber());
+        arr[2] = getDescription();
+        arr[5] = getImageLocation();
         return arr;
     }
-
+    
+    OtherProduct(ResultSet rs, int index){
+        setData(rs, index);
+    }
+    
 }

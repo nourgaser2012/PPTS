@@ -60,6 +60,7 @@
                           <Component id="jButtonRemoveProduct" min="-2" pref="200" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jTabbedPane" alignment="2" pref="571" max="32767" attributes="0"/>
+                      <Component id="jTextField1" alignment="2" min="-2" pref="147" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -74,6 +75,7 @@
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jButtonRemoveProduct" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonAddProduct" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextField1" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -203,6 +205,14 @@
             </Container>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JTextField" name="jTextField1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Search"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTextField1MouseClicked"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

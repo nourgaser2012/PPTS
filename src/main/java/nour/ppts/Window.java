@@ -1,50 +1,50 @@
-
 //connection and parent class for all windows
-
 package nour.ppts;
 
-import java.sql.DriverManager;
 import java.sql.*;
 import java.util.ArrayList;
 
-public abstract class Window extends javax.swing.JFrame {
+public abstract class Window extends javax.swing.JFrame implements Database {
 
-    protected static Connection connection;
-    protected static String username = "root";
-    protected static String password = "1234";
-    protected static String url = "jdbc:mysql://localhost:3306/ppts";
+    public static Connection connection;
 
     static {
-        System.out.println("Loading block called...");
-        updateLists();
+        System.out.println("class Window loading block called...");
+        dbToArrayLists();
     }
 
-    protected static void updateLists() {
-        System.out.println("Updating lists now...");
+    //overwrites the medicine and otherProducts arrayLists with all enteries from their respective tables from the database;
+    protected static void dbToArrayLists() {
+        System.out.println("Populating arrays now...");
         try {
-            Medicine.allMedicines = new ArrayList<>(); //clearing the array
-            connection = DriverManager.getConnection(url, username, password); //starting db connection
-            Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            ResultSet medicineResult = st.executeQuery("SELECT * FROM medicine;");
-            medicineResult.last();
-            int medicineSize = medicineResult.getRow();
-            medicineResult.first();
+            //clearing the arrays
+            Medicine.allMedicines = new ArrayList<>(); 
+            OtherProduct.allOtherProducts = new ArrayList<>();
+            
+            //ResultSets with all enteries from the database
+            ResultSet medicineResult = Database.readAll("medicine");
+            ResultSet otherResult = Database.readAll("otherProducts");
+            
+            int medicineSize = Database.getResultSetSize(medicineResult);
+            int otherSize = Database.getResultSetSize(otherResult);
+            
             System.out.println("Entering array population loops...");
             for (int i = 0; i < medicineSize; i++) {
-                Medicine m = new Medicine(medicineResult, i + 1);
-                Medicine.allMedicines.add(m);
+                Medicine.allMedicines.add(new Medicine(medicineResult, i + 1));
             }
-            st.close();
+            for (int i = 0; i < otherSize; i++) {
+                OtherProduct.allOtherProducts.add(new OtherProduct(otherResult, i + 1));
+            }
+            
             medicineResult.close();
-            connection.close();
+            otherResult.close();
             System.out.println("Populated arrays successfully(and closed connection)...");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    public void setTheme(String themeName) {
+    public final void setTheme(String themeName) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
