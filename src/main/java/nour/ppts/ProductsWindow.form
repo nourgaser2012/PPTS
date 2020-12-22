@@ -46,11 +46,6 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="33" red="33" type="rgb"/>
         </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
-        </Property>
       </Properties>
 
       <Layout>
@@ -64,7 +59,7 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jButtonRemoveProduct" min="-2" pref="200" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jTabbedPane" alignment="2" pref="0" max="32767" attributes="0"/>
+                      <Component id="jTabbedPane" alignment="2" pref="571" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -74,8 +69,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTabbedPane" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jTabbedPane" min="-2" pref="280" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jButtonRemoveProduct" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonAddProduct" alignment="2" min="-2" max="-2" attributes="0"/>

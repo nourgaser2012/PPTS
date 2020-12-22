@@ -22,22 +22,23 @@ public abstract class Window extends javax.swing.JFrame {
     protected static void updateLists() {
         System.out.println("Updating lists now...");
         try {
-            Medicine.allMedicines = new ArrayList<>();
-            connection = DriverManager.getConnection(url, username, password);
+            Medicine.allMedicines = new ArrayList<>(); //clearing the array
+            connection = DriverManager.getConnection(url, username, password); //starting db connection
             Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet medicineResult = st.executeQuery("SELECT * FROM medicine;");
             medicineResult.last();
             int medicineSize = medicineResult.getRow();
             medicineResult.first();
-            System.out.println("Entering massive population loops...");
+            System.out.println("Entering array population loops...");
             for (int i = 0; i < medicineSize; i++) {
                 Medicine m = new Medicine(medicineResult, i + 1);
                 Medicine.allMedicines.add(m);
             }
             st.close();
             medicineResult.close();
-            System.out.println("Populated arrays successfully(will close result set now)...");
+            connection.close();
+            System.out.println("Populated arrays successfully(and closed connection)...");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

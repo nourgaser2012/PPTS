@@ -33,18 +33,18 @@ public class Medicine extends Product {
     public static int numberOfAttributes = 9;
     public static ArrayList<Medicine> allMedicines = new ArrayList<>();
 
-    public void setData(ResultSet st, int index) {
+    public void setData(ResultSet rs, int index) {
         try {
-            st.absolute(index);
-            setId(st.getInt("medicineID"));
-            setName(st.getString("medicineName"));
-            setPrice(st.getDouble("medicinePrice"));
-            setStock(st.getInt("medicineStock"));
-            setSerialNumber(st.getInt("medicineSerialNumber"));
-            setLocation(st.getString("medicineLocation"));
-            setImageLocation(st.getString("medicineImageLocation"));
-            setDose(st.getDouble("medicineDose"));
-            setActiveSub(st.getString("medicineActiveSub"));
+            rs.absolute(index);
+            setId(rs.getInt("medicineID"));
+            setName(rs.getString("medicineName"));
+            setPrice(rs.getDouble("medicinePrice"));
+            setStock(rs.getInt("medicineStock"));
+            setSerialNumber(rs.getInt("medicineSerialNumber"));
+            setLocation(rs.getString("medicineLocation"));
+            setImageLocation(rs.getString("medicineImageLocation"));
+            setDose(rs.getDouble("medicineDose"));
+            setActiveSub(rs.getString("medicineActiveSub"));
         } catch (SQLException ex) {
             System.out.println("Error!\t" + ex.getMessage());
         }
@@ -70,8 +70,8 @@ public class Medicine extends Product {
         return allMedicines;
     }
 
-    Medicine(ResultSet st, int index) {
-        setData(st, index);
+    Medicine(ResultSet rs, int index) {
+        setData(rs, index);
     }
 
     public String[] getDataArray() {
