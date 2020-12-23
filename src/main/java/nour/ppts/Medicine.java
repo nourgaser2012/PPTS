@@ -32,7 +32,8 @@ public class Medicine extends Product {
 
     public static int numberOfAttributes = 9;
     public static ArrayList<Medicine> allMedicines = new ArrayList<>();
-
+    
+    @Override
     public void setData(ResultSet rs, int index) {
         try {
             rs.absolute(index);
@@ -73,7 +74,8 @@ public class Medicine extends Product {
     Medicine(ResultSet rs, int index) {
         setData(rs, index);
     }
-
+    
+    @Override
     public String[] getDataArray() {
         String[] arr = new String[numberOfAttributes];
         arr[0] = Integer.toString(getId());

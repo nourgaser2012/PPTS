@@ -37,6 +37,7 @@ public class OtherProduct extends Product {
         OtherProduct.allOtherProducts = allOtherProducts;
     }
 
+    @Override
     public void setData(ResultSet st, int index) {
         try {
             st.absolute(index);
@@ -51,7 +52,8 @@ public class OtherProduct extends Product {
             System.out.println("Error!\t" + ex.getMessage());
         }
     }
-
+    
+    @Override
     public String[] getDataArray() {
         String[] arr = new String[numberOfAttributes];
         arr[0] = Integer.toString(getId());

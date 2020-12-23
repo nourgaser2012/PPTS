@@ -2,10 +2,14 @@ package nour.ppts;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.*;
+import java.util.Map;
+import java.util.HashMap;
 
-public class AddProductWindow extends Window {
+public class AddProductWindow extends Window implements Database {
 
     public ProductsWindow parent;
+    private Boolean refresh = false;
 
     public AddProductWindow(ProductsWindow parent) {
         this.parent = parent;
@@ -17,6 +21,9 @@ public class AddProductWindow extends Window {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent windowEvent) {
+                if (refresh == true) {
+                Window.dbToArrayLists();
+                }
                 parent.setVisible(true);
             }
         });
@@ -32,43 +39,43 @@ public class AddProductWindow extends Window {
         jLabelTitle = new javax.swing.JLabel();
         jTabbedPane = new javax.swing.JTabbedPane();
         jPanelMedicine = new javax.swing.JPanel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField15 = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
+        jTextFieldMedicineStock = new javax.swing.JTextField();
+        jLabelMedicineImageLocation = new javax.swing.JLabel();
+        jTextFieldMedicineID = new javax.swing.JTextField();
+        jLabelMedicineID = new javax.swing.JLabel();
+        jLabelMedicinePrice = new javax.swing.JLabel();
+        jLabelMedicineDose = new javax.swing.JLabel();
+        jLabelMedicineSerialNumber = new javax.swing.JLabel();
+        jTextFieldMedicineImageLocation = new javax.swing.JTextField();
+        jLabelMedicineStock = new javax.swing.JLabel();
+        jLabelMedicineName = new javax.swing.JLabel();
+        jTextFieldMedicineSerialNumber = new javax.swing.JTextField();
+        jTextFieldMedicineName = new javax.swing.JTextField();
+        jTextFieldMedicinePrice = new javax.swing.JTextField();
+        jTextFieldMedicineDose = new javax.swing.JTextField();
+        jTextFieldMedicineActiveSub = new javax.swing.JTextField();
+        jLabelMedicineActiveSub = new javax.swing.JLabel();
+        jTextFieldMedicineLocation = new javax.swing.JTextField();
+        jLabelMedicineLocation = new javax.swing.JLabel();
         jPanelOther = new javax.swing.JPanel();
-        jTextField8 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
-        jTextField13 = new javax.swing.JTextField();
-        jTextField14 = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
+        jTextFieldOtherStock = new javax.swing.JTextField();
+        jLabelOtherImageLocation = new javax.swing.JLabel();
+        jTextFieldOtherID = new javax.swing.JTextField();
+        jLabelOtherID = new javax.swing.JLabel();
+        jLabelOtherPrice = new javax.swing.JLabel();
+        jLabelOtherDescription = new javax.swing.JLabel();
+        jLabelOtherSerialNumber = new javax.swing.JLabel();
+        jTextFieldOtherImageLocation = new javax.swing.JTextField();
+        jLabelOtherStock = new javax.swing.JLabel();
+        jLabelOtherName = new javax.swing.JLabel();
+        jTextFieldOtherSerialNumber = new javax.swing.JTextField();
+        jTextFieldOtherName = new javax.swing.JTextField();
+        jTextFieldOtherPrice = new javax.swing.JTextField();
+        jTextFieldOtherDescription = new javax.swing.JTextField();
+        jPanelBottom = new javax.swing.JPanel();
         jButtonAdd = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
-        jLabelErrorMessage = new javax.swing.JLabel();
+        jLabelStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -79,23 +86,23 @@ public class AddProductWindow extends Window {
 
         jTabbedPane.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel7.setText("Image");
+        jLabelMedicineImageLocation.setText("Image");
 
-        jLabel2.setText("ID");
+        jLabelMedicineID.setText("ID");
 
-        jLabel4.setText("Price");
+        jLabelMedicinePrice.setText("Price");
 
-        jLabel5.setText("Dose");
+        jLabelMedicineDose.setText("Dose");
 
-        jLabel8.setText("SN");
+        jLabelMedicineSerialNumber.setText("SN");
 
-        jLabel3.setText("Stock");
+        jLabelMedicineStock.setText("Stock");
 
-        jLabel1.setText("Name");
+        jLabelMedicineName.setText("Name");
 
-        jLabel15.setText("Active Substance");
+        jLabelMedicineActiveSub.setText("Active Substance");
 
-        jLabel16.setText("Location");
+        jLabelMedicineLocation.setText("Location");
 
         javax.swing.GroupLayout jPanelMedicineLayout = new javax.swing.GroupLayout(jPanelMedicine);
         jPanelMedicine.setLayout(jPanelMedicineLayout);
@@ -106,96 +113,96 @@ public class AddProductWindow extends Window {
                     .addGroup(jPanelMedicineLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel16)))
+                            .addComponent(jLabelMedicineName)
+                            .addComponent(jLabelMedicineID)
+                            .addComponent(jLabelMedicineStock)
+                            .addComponent(jLabelMedicinePrice)
+                            .addComponent(jLabelMedicineImageLocation)
+                            .addComponent(jLabelMedicineSerialNumber)
+                            .addComponent(jLabelMedicineDose)
+                            .addComponent(jLabelMedicineLocation)))
                     .addGroup(jPanelMedicineLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabelMedicineActiveSub, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMedicineImageLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMedicineDose, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMedicineStock, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMedicinePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMedicineName, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMedicineSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMedicineID, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMedicineActiveSub, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMedicineLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel16, jLabel2, jLabel3, jLabel4, jLabel5, jLabel7, jLabel8});
+        jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabelMedicineDose, jLabelMedicineID, jLabelMedicineImageLocation, jLabelMedicineLocation, jLabelMedicineName, jLabelMedicinePrice, jLabelMedicineSerialNumber, jLabelMedicineStock});
 
-        jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextField1, jTextField15, jTextField16, jTextField2, jTextField3, jTextField4, jTextField5, jTextField6, jTextField7});
+        jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextFieldMedicineActiveSub, jTextFieldMedicineDose, jTextFieldMedicineID, jTextFieldMedicineImageLocation, jTextFieldMedicineLocation, jTextFieldMedicineName, jTextFieldMedicinePrice, jTextFieldMedicineSerialNumber, jTextFieldMedicineStock});
 
         jPanelMedicineLayout.setVerticalGroup(
             jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMedicineLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelMedicineID, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMedicineID, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3)
                 .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMedicineName, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelMedicineName, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3)
                 .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelMedicinePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMedicinePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3)
                 .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMedicineStock, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelMedicineStock, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelMedicineSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMedicineSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMedicineImageLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelMedicineImageLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMedicineDose, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelMedicineDose, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMedicineActiveSub, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelMedicineActiveSub, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMedicineLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelMedicineLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextField1, jTextField15, jTextField16, jTextField2, jTextField3, jTextField4, jTextField5, jTextField6, jTextField7});
+        jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextFieldMedicineActiveSub, jTextFieldMedicineDose, jTextFieldMedicineID, jTextFieldMedicineImageLocation, jTextFieldMedicineLocation, jTextFieldMedicineName, jTextFieldMedicinePrice, jTextFieldMedicineSerialNumber, jTextFieldMedicineStock});
 
-        jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jLabel15, jLabel16, jLabel2, jLabel3, jLabel4, jLabel5, jLabel7, jLabel8});
+        jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelMedicineActiveSub, jLabelMedicineDose, jLabelMedicineID, jLabelMedicineImageLocation, jLabelMedicineLocation, jLabelMedicineName, jLabelMedicinePrice, jLabelMedicineSerialNumber, jLabelMedicineStock});
 
         jTabbedPane.addTab("Medicine", jPanelMedicine);
 
-        jLabel9.setText("Image");
+        jLabelOtherImageLocation.setText("Image");
 
-        jLabel6.setText("ID");
+        jLabelOtherID.setText("ID");
 
-        jLabel10.setText("Price");
+        jLabelOtherPrice.setText("Price");
 
-        jLabel11.setText("Description");
+        jLabelOtherDescription.setText("Description");
 
-        jLabel12.setText("SN");
+        jLabelOtherSerialNumber.setText("SN");
 
-        jLabel13.setText("Stock");
+        jLabelOtherStock.setText("Stock");
 
-        jLabel14.setText("Name");
+        jLabelOtherName.setText("Name");
 
         javax.swing.GroupLayout jPanelOtherLayout = new javax.swing.GroupLayout(jPanelOther);
         jPanelOther.setLayout(jPanelOtherLayout);
@@ -204,68 +211,68 @@ public class AddProductWindow extends Window {
             .addGroup(jPanelOtherLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelOtherName)
+                    .addComponent(jLabelOtherID)
+                    .addComponent(jLabelOtherStock)
+                    .addComponent(jLabelOtherPrice)
+                    .addComponent(jLabelOtherImageLocation)
+                    .addComponent(jLabelOtherSerialNumber)
+                    .addComponent(jLabelOtherDescription, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-                    .addComponent(jTextField14)
-                    .addComponent(jTextField8)
-                    .addComponent(jTextField13)
-                    .addComponent(jTextField12)
-                    .addComponent(jTextField11)
-                    .addComponent(jTextField9))
+                    .addComponent(jTextFieldOtherImageLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                    .addComponent(jTextFieldOtherDescription)
+                    .addComponent(jTextFieldOtherStock)
+                    .addComponent(jTextFieldOtherPrice)
+                    .addComponent(jTextFieldOtherName)
+                    .addComponent(jTextFieldOtherSerialNumber)
+                    .addComponent(jTextFieldOtherID))
                 .addContainerGap())
         );
 
-        jPanelOtherLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel10, jLabel11, jLabel12, jLabel13, jLabel14, jLabel6, jLabel9});
+        jPanelOtherLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabelOtherDescription, jLabelOtherID, jLabelOtherImageLocation, jLabelOtherName, jLabelOtherPrice, jLabelOtherSerialNumber, jLabelOtherStock});
 
         jPanelOtherLayout.setVerticalGroup(
             jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelOtherLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelOtherID, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldOtherID, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3)
                 .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldOtherName, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelOtherName, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3)
                 .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelOtherPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldOtherPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3)
                 .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldOtherStock, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelOtherStock, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelOtherSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldOtherSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldOtherImageLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelOtherImageLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldOtherDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelOtherDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jPanelOtherLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextField10, jTextField11, jTextField12, jTextField13, jTextField14, jTextField8, jTextField9});
+        jPanelOtherLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextFieldOtherDescription, jTextFieldOtherID, jTextFieldOtherImageLocation, jTextFieldOtherName, jTextFieldOtherPrice, jTextFieldOtherSerialNumber, jTextFieldOtherStock});
 
-        jPanelOtherLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel10, jLabel11, jLabel12, jLabel13, jLabel14, jLabel6, jLabel9});
+        jPanelOtherLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelOtherDescription, jLabelOtherID, jLabelOtherImageLocation, jLabelOtherName, jLabelOtherPrice, jLabelOtherSerialNumber, jLabelOtherStock});
 
         jTabbedPane.addTab("Other", jPanelOther);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanelBottom.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jButtonAdd.setText("Add");
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -276,15 +283,15 @@ public class AddProductWindow extends Window {
 
         jButtonCancel.setText("Cancel");
 
-        jLabelErrorMessage.setText("Error Message");
+        jLabelStatus.setText("Error Message");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelBottomLayout = new javax.swing.GroupLayout(jPanelBottom);
+        jPanelBottom.setLayout(jPanelBottomLayout);
+        jPanelBottomLayout.setHorizontalGroup(
+            jPanelBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBottomLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonAdd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -292,20 +299,20 @@ public class AddProductWindow extends Window {
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonAdd, jButtonCancel, jLabelErrorMessage});
+        jPanelBottomLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonAdd, jButtonCancel, jLabelStatus});
 
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanelBottomLayout.setVerticalGroup(
+            jPanelBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBottomLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAdd)
                     .addComponent(jButtonCancel)
-                    .addComponent(jLabelErrorMessage))
+                    .addComponent(jLabelStatus))
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonAdd, jButtonCancel, jLabelErrorMessage});
+        jPanelBottomLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonAdd, jButtonCancel, jLabelStatus});
 
         javax.swing.GroupLayout jPanelMainLayout = new javax.swing.GroupLayout(jPanelMain);
         jPanelMain.setLayout(jPanelMainLayout);
@@ -315,7 +322,7 @@ public class AddProductWindow extends Window {
                 .addGroup(jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMainLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanelBottom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelMainLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -327,7 +334,7 @@ public class AddProductWindow extends Window {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanelMainLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabelTitle, jPanel1, jTabbedPane});
+        jPanelMainLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabelTitle, jPanelBottom, jTabbedPane});
 
         jPanelMainLayout.setVerticalGroup(
             jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,7 +344,7 @@ public class AddProductWindow extends Window {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelBottom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -361,49 +368,177 @@ public class AddProductWindow extends Window {
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         // TODO add your handling code here:
+        try {
+            //checking attibutes which much be non-null
+            if ((jTextFieldMedicineID.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelMedicine))
+                    || ((jTextFieldOtherID.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelOther)))) {
+                throw new NumberFormatException("ID cannot be empty.");
+            }
+            if ((jTextFieldMedicineName.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelMedicine))
+                    || ((jTextFieldOtherName.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelOther)))) {
+                throw new NumberFormatException("Name cannot be empty.");
+            }
+            if ((jTextFieldMedicineSerialNumber.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelMedicine))
+                    || ((jTextFieldOtherSerialNumber.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelOther)))) {
+                throw new NumberFormatException("SN cannot be empty.");
+            }
+
+            int id, serialNumber, stock;
+            String name, imageLocation;
+            Double price;
+            Map<String, String> values = new HashMap<String, String>();
+
+            if (jTabbedPane.getSelectedComponent().equals(jPanelMedicine)) {
+                String location, activeSub;
+                Double dose;
+
+                id = Integer.parseInt(jTextFieldMedicineID.getText());
+                serialNumber = Integer.parseInt(jTextFieldMedicineSerialNumber.getText());
+                name = jTextFieldMedicineName.getText();
+                if (!jTextFieldMedicineStock.getText().isEmpty()) {
+                    stock = Integer.parseInt(jTextFieldMedicineStock.getText());
+                }
+                if (!jTextFieldMedicinePrice.getText().isEmpty()) {
+                    price = Double.parseDouble(jTextFieldMedicinePrice.getText());
+                }
+                location = jTextFieldMedicineLocation.getText();
+                activeSub = jTextFieldMedicineActiveSub.getText();
+                if (!jTextFieldMedicineDose.getText().isEmpty()) {
+                    dose = Double.parseDouble(jTextFieldMedicineDose.getText());
+                }
+                imageLocation = jTextFieldMedicineImageLocation.getText();
+                values.put("tableName", "medicine");
+                values.put("medicineID", String.valueOf(jTextFieldMedicineID.getText()));
+                values.put("medicineName", jTextFieldMedicineName.getText());
+                values.put("medicineActiveSub", jTextFieldMedicineActiveSub.getText());
+                values.put("medicinePrice", jTextFieldMedicinePrice.getText());
+                values.put("medicineStock", jTextFieldMedicineStock.getText());
+                values.put("medicineImageLocation", jTextFieldMedicineImageLocation.getText());
+                values.put("medicineDose", jTextFieldMedicineDose.getText());
+                values.put("medicineSerialNumber", jTextFieldMedicineSerialNumber.getText());
+                values.put("medicineLocation", jTextFieldMedicineLocation.getText());
+
+            } else if (jTabbedPane.getSelectedComponent().equals(jPanelOther)) {
+                String description;
+                id = Integer.parseInt(jTextFieldOtherID.getText());
+                serialNumber = Integer.parseInt(jTextFieldOtherSerialNumber.getText());
+                if (!jTextFieldOtherStock.getText().isEmpty()) {
+                    stock = Integer.parseInt(jTextFieldOtherStock.getText());
+                }
+                name = jTextFieldOtherName.getText();
+                if (!jTextFieldOtherPrice.getText().isEmpty()) {
+                    price = Double.parseDouble(jTextFieldOtherPrice.getText());
+                }
+                description = jTextFieldOtherDescription.getText();
+                imageLocation = jTextFieldOtherImageLocation.getText();
+
+                values.put("tableName", "otherproducts");
+                values.put("productID", String.valueOf(jTextFieldOtherID.getText()));
+                values.put("productName", jTextFieldOtherName.getText());
+                values.put("productDescription", jTextFieldOtherDescription.getText());
+                values.put("productPrice", jTextFieldOtherPrice.getText());
+                values.put("productStock", jTextFieldOtherStock.getText());
+                values.put("productImageLocation", jTextFieldOtherImageLocation.getText());
+                values.put("productSerialNumber", jTextFieldOtherSerialNumber.getText());
+
+            } else {
+                jLabelStatus.setText("No tab seletced");
+            }
+
+            write("INSERT INTO " + values.get("tableName") + " VALUES", values);
+            jLabelStatus.setText("Added successfully!");
+            refresh = true;
+        } catch (NumberFormatException | SQLException e) {
+            jLabelStatus.setText(e.getMessage());
+            System.out.println(e.getMessage());
+        }
+
     }//GEN-LAST:event_jButtonAddActionPerformed
+
+    @Override
+    public ResultSet read(String query) {
+        return null;
+    }
+
+    @Override
+    public void write(String insertQuery, Map<String, String> values) throws SQLException {
+        try {
+            connection = Database.openConnection(connection);
+            Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            if (values.get("tableName") == "medicine") {
+                System.out.println(insertQuery + "("
+                        + values.get("medicineID") + ", "
+                        + "'" + values.get("medicineName") + "', "
+                        + "'" + values.get("medicineActiveSub") + "', "
+                        + values.get("medicinePrice") + ", "
+                        + values.get("medicineStock") + ", "
+                        + "'" + values.get("medicineImageLocation") + "', "
+                        + values.get("medicineDose") + ", "
+                        + values.get("medicineSerialNumber") + ", "
+                        + "'" + values.get("medicineLocation")
+                        + "');");
+                st.executeUpdate(insertQuery + "("
+                        + values.get("medicineID") + ", "
+                        + "'" + values.get("medicineName") + "', "
+                        + "'" + values.get("medicineActiveSub") + "', "
+                        + values.get("medicinePrice") + ", "
+                        + values.get("medicineStock") + ", "
+                        + "'" + values.get("medicineImageLocation") + "', "
+                        + values.get("medicineDose") + ", "
+                        + values.get("medicineSerialNumber") + ", "
+                        + "'" + values.get("medicineLocation")
+                        + "');");
+            }
+            connection.close();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            jLabelStatus.setText(e.getMessage());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonCancel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelErrorMessage;
+    private javax.swing.JLabel jLabelMedicineActiveSub;
+    private javax.swing.JLabel jLabelMedicineDose;
+    private javax.swing.JLabel jLabelMedicineID;
+    private javax.swing.JLabel jLabelMedicineImageLocation;
+    private javax.swing.JLabel jLabelMedicineLocation;
+    private javax.swing.JLabel jLabelMedicineName;
+    private javax.swing.JLabel jLabelMedicinePrice;
+    private javax.swing.JLabel jLabelMedicineSerialNumber;
+    private javax.swing.JLabel jLabelMedicineStock;
+    private javax.swing.JLabel jLabelOtherDescription;
+    private javax.swing.JLabel jLabelOtherID;
+    private javax.swing.JLabel jLabelOtherImageLocation;
+    private javax.swing.JLabel jLabelOtherName;
+    private javax.swing.JLabel jLabelOtherPrice;
+    private javax.swing.JLabel jLabelOtherSerialNumber;
+    private javax.swing.JLabel jLabelOtherStock;
+    private javax.swing.JLabel jLabelStatus;
     private javax.swing.JLabel jLabelTitle;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelBottom;
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JPanel jPanelMedicine;
     private javax.swing.JPanel jPanelOther;
     private javax.swing.JTabbedPane jTabbedPane;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jTextFieldMedicineActiveSub;
+    private javax.swing.JTextField jTextFieldMedicineDose;
+    private javax.swing.JTextField jTextFieldMedicineID;
+    private javax.swing.JTextField jTextFieldMedicineImageLocation;
+    private javax.swing.JTextField jTextFieldMedicineLocation;
+    private javax.swing.JTextField jTextFieldMedicineName;
+    private javax.swing.JTextField jTextFieldMedicinePrice;
+    private javax.swing.JTextField jTextFieldMedicineSerialNumber;
+    private javax.swing.JTextField jTextFieldMedicineStock;
+    private javax.swing.JTextField jTextFieldOtherDescription;
+    private javax.swing.JTextField jTextFieldOtherID;
+    private javax.swing.JTextField jTextFieldOtherImageLocation;
+    private javax.swing.JTextField jTextFieldOtherName;
+    private javax.swing.JTextField jTextFieldOtherPrice;
+    private javax.swing.JTextField jTextFieldOtherSerialNumber;
+    private javax.swing.JTextField jTextFieldOtherStock;
     // End of variables declaration//GEN-END:variables
 }
