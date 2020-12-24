@@ -24,9 +24,9 @@ public interface Database {
         return size;
     }
 
-    static Connection openConnection(Connection conn) throws SQLException {
+    static Connection openConnection() throws SQLException {
         System.out.println("Attmpting to start connection...");
-        conn = DriverManager.getConnection(url, username, password);
+        Connection conn = DriverManager.getConnection(url, username, password);
         System.out.println("Connection established successfully...");
         return conn;
     }
@@ -38,5 +38,5 @@ public interface Database {
     
     ResultSet read(String selectQuery) throws SQLException;
 
-    void write(String query, java.util.Map<String, String> values) throws SQLException;
+    void write(String query, java.util.Map<String, String> values, java.util.ArrayList<String> columns) throws SQLException;
 }

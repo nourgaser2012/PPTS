@@ -22,7 +22,7 @@ public class AddProductWindow extends Window implements Database {
             @Override
             public void windowClosed(WindowEvent windowEvent) {
                 if (refresh == true) {
-                Window.dbToArrayLists();
+                    Window.dbToArrayLists();
                 }
                 parent.setVisible(true);
             }
@@ -410,13 +410,25 @@ public class AddProductWindow extends Window implements Database {
                 values.put("tableName", "medicine");
                 values.put("medicineID", String.valueOf(jTextFieldMedicineID.getText()));
                 values.put("medicineName", jTextFieldMedicineName.getText());
-                values.put("medicineActiveSub", jTextFieldMedicineActiveSub.getText());
-                values.put("medicinePrice", jTextFieldMedicinePrice.getText());
-                values.put("medicineStock", jTextFieldMedicineStock.getText());
-                values.put("medicineImageLocation", jTextFieldMedicineImageLocation.getText());
-                values.put("medicineDose", jTextFieldMedicineDose.getText());
+                if (!jTextFieldMedicineActiveSub.getText().isEmpty()) {
+                    values.put("medicineActiveSub", jTextFieldMedicineActiveSub.getText());
+                }
+                if (!jTextFieldMedicinePrice.getText().isEmpty()) {
+                    values.put("medicinePrice", jTextFieldMedicinePrice.getText());
+                }
+                if (!jTextFieldMedicineStock.getText().isEmpty()) {
+                    values.put("medicineStock", jTextFieldMedicineStock.getText());
+                }
+                if (!jTextFieldMedicineImageLocation.getText().isEmpty()) {
+                    values.put("medicineImageLocation", jTextFieldMedicineImageLocation.getText());
+                }
+                if (!jTextFieldMedicineDose.getText().isEmpty()) {
+                    values.put("medicineDose", jTextFieldMedicineDose.getText());
+                }
                 values.put("medicineSerialNumber", jTextFieldMedicineSerialNumber.getText());
-                values.put("medicineLocation", jTextFieldMedicineLocation.getText());
+                if (!jTextFieldMedicineLocation.getText().isEmpty()) {
+                    values.put("medicineLocation", jTextFieldMedicineLocation.getText());
+                }
 
             } else if (jTabbedPane.getSelectedComponent().equals(jPanelOther)) {
                 String description;
@@ -435,17 +447,35 @@ public class AddProductWindow extends Window implements Database {
                 values.put("tableName", "otherproducts");
                 values.put("productID", String.valueOf(jTextFieldOtherID.getText()));
                 values.put("productName", jTextFieldOtherName.getText());
-                values.put("productDescription", jTextFieldOtherDescription.getText());
-                values.put("productPrice", jTextFieldOtherPrice.getText());
-                values.put("productStock", jTextFieldOtherStock.getText());
-                values.put("productImageLocation", jTextFieldOtherImageLocation.getText());
+                if (!jTextFieldOtherDescription.getText().isEmpty()) {
+                    values.put("productDescription", jTextFieldOtherDescription.getText());
+                }
+                if (!jTextFieldOtherPrice.getText().isEmpty()) {
+                    values.put("productPrice", jTextFieldOtherPrice.getText());
+                }
+                if (!jTextFieldOtherStock.getText().isEmpty()) {
+                    values.put("productStock", jTextFieldOtherStock.getText());
+                }
+                if (!jTextFieldOtherImageLocation.getText().isEmpty()) {
+                    values.put("productImageLocation", jTextFieldOtherImageLocation.getText());
+                }
                 values.put("productSerialNumber", jTextFieldOtherSerialNumber.getText());
 
             } else {
                 jLabelStatus.setText("No tab seletced");
             }
-
-            write("INSERT INTO " + values.get("tableName") + " VALUES", values);
+            String columns = "( ";
+            java.util.ArrayList<String> columnsArr = new java.util.ArrayList<>();
+            for (String k : values.keySet()) {
+                if (k == "tableName") {
+                    continue;
+                }
+                columns += k + ", ";
+                columnsArr.add(k);
+            }
+            columns = columns.substring(0, columns.length() - 2);
+            columns += ") ";
+            write("INSERT INTO " + values.get("tableName") + columns + "VALUES(", values, columnsArr);
             jLabelStatus.setText("Added successfully!");
             refresh = true;
         } catch (NumberFormatException | SQLException e) {
@@ -461,35 +491,22 @@ public class AddProductWindow extends Window implements Database {
     }
 
     @Override
-    public void write(String insertQuery, Map<String, String> values) throws SQLException {
+    public void write(String insertQuery, Map<String, String> values, java.util.ArrayList<String> columns) throws SQLException {
         try {
-            connection = Database.openConnection(connection);
-            Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            if (values.get("tableName") == "medicine") {
-                System.out.println(insertQuery + "("
-                        + values.get("medicineID") + ", "
-                        + "'" + values.get("medicineName") + "', "
-                        + "'" + values.get("medicineActiveSub") + "', "
-                        + values.get("medicinePrice") + ", "
-                        + values.get("medicineStock") + ", "
-                        + "'" + values.get("medicineImageLocation") + "', "
-                        + values.get("medicineDose") + ", "
-                        + values.get("medicineSerialNumber") + ", "
-                        + "'" + values.get("medicineLocation")
-                        + "');");
-                st.executeUpdate(insertQuery + "("
-                        + values.get("medicineID") + ", "
-                        + "'" + values.get("medicineName") + "', "
-                        + "'" + values.get("medicineActiveSub") + "', "
-                        + values.get("medicinePrice") + ", "
-                        + values.get("medicineStock") + ", "
-                        + "'" + values.get("medicineImageLocation") + "', "
-                        + values.get("medicineDose") + ", "
-                        + values.get("medicineSerialNumber") + ", "
-                        + "'" + values.get("medicineLocation")
-                        + "');");
+            connection = Database.openConnection();
+            Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            for (String k : columns) {
+                try {
+                    Double.parseDouble(values.get(k));
+                    insertQuery += values.get(k) + ", ";
+                } catch (NumberFormatException e) {
+                    insertQuery += "'" + values.get(k) + "', ";
+                }
             }
+            insertQuery = insertQuery.substring(0, insertQuery.length() - 2);
+            insertQuery += ");";
+            System.out.println(insertQuery);
+            st.executeUpdate(insertQuery);
             connection.close();
             st.close();
         } catch (SQLException e) {

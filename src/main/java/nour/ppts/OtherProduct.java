@@ -1,5 +1,4 @@
 //class for non-medicine products;
-
 package nour.ppts;
 
 import java.sql.ResultSet;
@@ -12,6 +11,8 @@ public class OtherProduct extends Product {
 
     public static int numberOfAttributes = 7;
     public static ArrayList<OtherProduct> allOtherProducts = new ArrayList<>();
+    public static String[] attributeNames = {"productID", "productName", "productDescription", "productPrice",
+        "productStock", "productImageLocation", "productSerialNumber"};
 
     public String getDescription() {
         return description;
@@ -52,7 +53,7 @@ public class OtherProduct extends Product {
             System.out.println("Error!\t" + ex.getMessage());
         }
     }
-    
+
     @Override
     public String[] getDataArray() {
         String[] arr = new String[numberOfAttributes];
@@ -65,9 +66,9 @@ public class OtherProduct extends Product {
         arr[5] = getImageLocation();
         return arr;
     }
-    
-    OtherProduct(ResultSet rs, int index){
+
+    OtherProduct(ResultSet rs, int index) {
         setData(rs, index);
     }
-    
+
 }

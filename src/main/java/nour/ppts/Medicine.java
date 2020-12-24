@@ -1,5 +1,4 @@
 //medicine objects
-
 package nour.ppts;
 
 import java.util.ArrayList;
@@ -9,6 +8,11 @@ public class Medicine extends Product {
 
     private String location, activeSub;
     private double dose;
+
+    public static int numberOfAttributes = 9;
+    public static ArrayList<Medicine> allMedicines = new ArrayList<>();
+    public static String[] attributeNames = {"medicineID", "medicineName", "medicineActiveSub", "medicinePrice",
+        "medicineStock", "medicineImageLocation", "medicineDose", "medicineSerialNumber", "medicineLocation"};
 
     public void setLocation(String location) {
         this.location = location;
@@ -30,9 +34,6 @@ public class Medicine extends Product {
         Medicine.allMedicines = allMedicines;
     }
 
-    public static int numberOfAttributes = 9;
-    public static ArrayList<Medicine> allMedicines = new ArrayList<>();
-    
     @Override
     public void setData(ResultSet rs, int index) {
         try {
@@ -74,7 +75,7 @@ public class Medicine extends Product {
     Medicine(ResultSet rs, int index) {
         setData(rs, index);
     }
-    
+
     @Override
     public String[] getDataArray() {
         String[] arr = new String[numberOfAttributes];
