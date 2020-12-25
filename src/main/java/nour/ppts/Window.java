@@ -24,7 +24,7 @@ public abstract class Window extends javax.swing.JFrame {
             
             //ResultSets with all enteries from the database
             ResultSet medicineResult = Database.readAll("medicine");
-            ResultSet otherResult = Database.readAll("otherProducts");
+            ResultSet otherResult = Database.readAll("product");
             
             int medicineSize = Database.getResultSetSize(medicineResult);
             int otherSize = Database.getResultSetSize(otherResult);

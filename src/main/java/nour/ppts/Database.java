@@ -10,13 +10,12 @@ public interface Database {
 
     static ResultSet readAll(String tableName) throws SQLException {
         Connection conn = DriverManager.getConnection(url, username, password);
-        Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-                ResultSet.CONCUR_UPDATABLE);
+        Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = st.executeQuery("SELECT * FROM " + tableName + ";");
         rs.first();
         return rs;
     }
-   
+
     static int getResultSetSize(ResultSet rs) throws SQLException {
         rs.last();
         int size = rs.getRow();
@@ -31,12 +30,16 @@ public interface Database {
         return conn;
     }
 
-    static void closeConnection(Connection conn) throws SQLException {
-        conn.close();
-        System.out.print("Connection closed...");
+    static void remove(String tableName, int id) throws SQLException {
+        Connection conn = DriverManager.getConnection(url, username, password);
+        PreparedStatement st = conn.prepareStatement("DELETE FROM " + tableName + " WHERE " + tableName + "ID = " + id + ";");
+        st.executeUpdate();
+        st.close();
+        Window.dbToArrayLists();
     }
-    
+
     ResultSet read(String selectQuery) throws SQLException;
 
-    void write(String query, java.util.Map<String, String> values, java.util.ArrayList<String> columns) throws SQLException;
+    void update(String query, java.util.Map<String, String> values, java.util.ArrayList<String> columns) throws SQLException;
+
 }

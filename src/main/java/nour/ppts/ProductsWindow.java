@@ -4,14 +4,21 @@ package nour.ppts;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 public class ProductsWindow extends Window {
 
     public MainWindow parent;
+    private static String[] medicineColumns = {
+        "ID", "Name", "Price (EGP)", "Stock", "Active Substance", "Dose (mg)", "Location", "Serial Number"
+    };
+    private static String[] otherColumns = {
+        "ID", "Name", "Price (EGP)", "Stock", "Serial Number", "Description"
+    };
 
     public ProductsWindow(MainWindow parent) {
         this.parent = parent;
-        
+
         //hiding parent until productsWindow is closed
         parent.setVisible(false);
         this.addWindowListener(new WindowAdapter() {
@@ -20,26 +27,20 @@ public class ProductsWindow extends Window {
                 parent.setVisible(true);
             }
         });
-        
-        medicineTableModel = new javax.swing.table.DefaultTableModel(
-                new Object[][]{},
-                new String[]{
-                    "ID", "Name", "Price (EGP)", "Stock", "Active Substance", "Dose (mg)", "Location", "Serial Number"
-                }
-        );
-        otherTableModel = new javax.swing.table.DefaultTableModel(
-                new Object[][]{},
-                new String[]{
-                    "ID", "Name", "Price (EGP)", "Stock", "Serial Number", "Description"
-                }
-        );
+
+        medicineTableModel = initTableModel(medicineColumns);
+        otherTableModel = initTableModel(otherColumns);
         initComponents();
+
         jTableMedicine.setDefaultEditor(Object.class, null); //disabling table fields editing
         jTableOther.setDefaultEditor(Object.class, null);
 
-        updateMedicineTable(medicineTableModel, Medicine.allMedicines);
-        updateOtherTable(otherTableModel, OtherProduct.allOtherProducts);
-
+        try {
+            addToMedicineTable(Medicine.allMedicines);
+            addToOtherTable(OtherProduct.allOtherProducts);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
         this.setLocation(500, 250);
     }
 
@@ -175,26 +176,96 @@ public class ProductsWindow extends Window {
 
     private void jButtonRemoveProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveProductActionPerformed
         // TODO add your handling code here:
+        try {
+            if (jTabbedPane.getSelectedIndex() == 0) {
+                int[] indexes = jTableMedicine.getSelectedRows();
+                for (int index : indexes) {
+                    int id = Integer.parseInt(medicineTableModel.getValueAt(index, 0).toString());
+                    removeFromMedicineTable(id);
+                }
+                refreshMedicineTable();
+            } else {
+                int[] indexes = jTableOther.getSelectedRows();
+                for (int index : indexes) {
+                    int id = Integer.parseInt(otherTableModel.getValueAt(index, 0).toString());
+                    removeFromOtherTable(id);
+                }
+                refreshOtherTable();
+            }
+
+        } catch (SQLException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("Failed to remove:" + e.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }//GEN-LAST:event_jButtonRemoveProductActionPerformed
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1MouseClicked
-    private void updateMedicineTable(DefaultTableModel model, ArrayList<Medicine> arr) {
-        for (int i = 0; i < arr.size(); i++) {
-            String[] current = arr.get(i).getDataArray();
+
+    private DefaultTableModel initTableModel(String[] columns) {
+        DefaultTableModel model = new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                columns
+        );
+        return model;
+    }
+
+    public void refreshMedicineTable() throws SQLException {
+        medicineTableModel = initTableModel(medicineColumns);
+        addToMedicineTable(Medicine.allMedicines);
+        jTableMedicine.setModel(medicineTableModel);
+    }
+
+    public void refreshOtherTable() throws SQLException {
+        otherTableModel = initTableModel(otherColumns);
+        addToOtherTable(OtherProduct.allOtherProducts);
+        jTableOther.setModel(otherTableModel);
+    }
+
+    //add an ArrayList of Medicine
+    private void addToMedicineTable(ArrayList<Medicine> medicines) {
+        for (int i = 0; i < medicines.size(); i++) {
+            String[] current = medicines.get(i).getDataArray();
             String[] temp = {current[0], current[1], current[3], current[4], current[2], current[6], current[8], current[7]};
-            model.addRow(temp);
+            medicineTableModel.addRow(temp);
         }
     }
 
-    private void updateOtherTable(DefaultTableModel model, ArrayList<OtherProduct> arr) {
-        for (int i = 0; i < arr.size(); i++) {
-            String[] current = arr.get(i).getDataArray();
+    //add one Medicine
+    public void addToMedicineTable(Medicine medicine) {
+        String[] current = medicine.getDataArray();
+        String[] temp = {current[0], current[1], current[3], current[4], current[2], current[6], current[8], current[7]};
+        medicineTableModel.addColumn(temp);
+    }
+
+    //remove one Medicine
+    public void removeFromMedicineTable(int id) throws SQLException {
+        Database.remove("medicine", id);
+    }
+
+    //add an ArrayList of OtherProduct
+    private void addToOtherTable(ArrayList<OtherProduct> products) throws SQLException {
+        for (int i = 0; i < products.size(); i++) {
+            String[] current = products.get(i).getDataArray();
             String[] temp = {current[0], current[1], current[3], current[4], current[6], current[2]};
-            model.addRow(temp);
+            otherTableModel.addRow(temp);
         }
     }
+
+    //add one OtherProduct
+    public void addToOtherTable(OtherProduct product) {
+        String[] current = product.getDataArray();
+        String[] temp = {current[0], current[1], current[3], current[4], current[6], current[2]};
+        otherTableModel.addRow(temp);
+    }
+
+    //remove one OtherProduct
+    public void removeFromOtherTable(int id) throws Exception {
+        Database.remove("product", id);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAddProduct;

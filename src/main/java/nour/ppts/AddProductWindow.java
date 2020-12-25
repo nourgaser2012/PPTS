@@ -9,20 +9,32 @@ import java.util.HashMap;
 public class AddProductWindow extends Window implements Database {
 
     public ProductsWindow parent;
-    private Boolean refresh = false;
+    private Boolean refreshMedicine = false;
+    private Boolean refreshOther = false;
 
     public AddProductWindow(ProductsWindow parent) {
         this.parent = parent;
         setSize(440, 580);
         setResizable(false);
-
+        this.setLocation(parent.getLocation().x, parent.getLocation().y - 60);
         //hiding parent until addProductWindow is closed
         parent.setVisible(false);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent windowEvent) {
-                if (refresh == true) {
+                if (refreshMedicine == true || refreshOther == true) {
                     Window.dbToArrayLists();
+                }
+                try {
+                if (refreshMedicine == true) {
+                    parent.refreshMedicineTable();
+                }
+                if (refreshOther == true) {
+                    parent.refreshOtherTable();
+                }
+                }
+                catch (SQLException e) {
+                    System.out.println(e.getMessage());
                 }
                 parent.setVisible(true);
             }
@@ -281,7 +293,12 @@ public class AddProductWindow extends Window implements Database {
             }
         });
 
-        jButtonCancel.setText("Cancel");
+        jButtonCancel.setText("Close");
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
+            }
+        });
 
         jLabelStatus.setText("Error Message");
 
@@ -372,41 +389,21 @@ public class AddProductWindow extends Window implements Database {
             //checking attibutes which much be non-null
             if ((jTextFieldMedicineID.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelMedicine))
                     || ((jTextFieldOtherID.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelOther)))) {
-                throw new NumberFormatException("ID cannot be empty.");
+                throw new Exception("ID cannot be empty.");
             }
             if ((jTextFieldMedicineName.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelMedicine))
                     || ((jTextFieldOtherName.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelOther)))) {
-                throw new NumberFormatException("Name cannot be empty.");
+                throw new Exception("Name cannot be empty.");
             }
             if ((jTextFieldMedicineSerialNumber.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelMedicine))
                     || ((jTextFieldOtherSerialNumber.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelOther)))) {
-                throw new NumberFormatException("SN cannot be empty.");
+                throw new Exception("SN cannot be empty.");
             }
 
-            int id, serialNumber, stock;
-            String name, imageLocation;
-            Double price;
-            Map<String, String> values = new HashMap<String, String>();
+            Map<String, String> values = new HashMap<>();
 
             if (jTabbedPane.getSelectedComponent().equals(jPanelMedicine)) {
-                String location, activeSub;
-                Double dose;
 
-                id = Integer.parseInt(jTextFieldMedicineID.getText());
-                serialNumber = Integer.parseInt(jTextFieldMedicineSerialNumber.getText());
-                name = jTextFieldMedicineName.getText();
-                if (!jTextFieldMedicineStock.getText().isEmpty()) {
-                    stock = Integer.parseInt(jTextFieldMedicineStock.getText());
-                }
-                if (!jTextFieldMedicinePrice.getText().isEmpty()) {
-                    price = Double.parseDouble(jTextFieldMedicinePrice.getText());
-                }
-                location = jTextFieldMedicineLocation.getText();
-                activeSub = jTextFieldMedicineActiveSub.getText();
-                if (!jTextFieldMedicineDose.getText().isEmpty()) {
-                    dose = Double.parseDouble(jTextFieldMedicineDose.getText());
-                }
-                imageLocation = jTextFieldMedicineImageLocation.getText();
                 values.put("tableName", "medicine");
                 values.put("medicineID", String.valueOf(jTextFieldMedicineID.getText()));
                 values.put("medicineName", jTextFieldMedicineName.getText());
@@ -431,20 +428,8 @@ public class AddProductWindow extends Window implements Database {
                 }
 
             } else if (jTabbedPane.getSelectedComponent().equals(jPanelOther)) {
-                String description;
-                id = Integer.parseInt(jTextFieldOtherID.getText());
-                serialNumber = Integer.parseInt(jTextFieldOtherSerialNumber.getText());
-                if (!jTextFieldOtherStock.getText().isEmpty()) {
-                    stock = Integer.parseInt(jTextFieldOtherStock.getText());
-                }
-                name = jTextFieldOtherName.getText();
-                if (!jTextFieldOtherPrice.getText().isEmpty()) {
-                    price = Double.parseDouble(jTextFieldOtherPrice.getText());
-                }
-                description = jTextFieldOtherDescription.getText();
-                imageLocation = jTextFieldOtherImageLocation.getText();
 
-                values.put("tableName", "otherproducts");
+                values.put("tableName", "product");
                 values.put("productID", String.valueOf(jTextFieldOtherID.getText()));
                 values.put("productName", jTextFieldOtherName.getText());
                 if (!jTextFieldOtherDescription.getText().isEmpty()) {
@@ -475,15 +460,28 @@ public class AddProductWindow extends Window implements Database {
             }
             columns = columns.substring(0, columns.length() - 2);
             columns += ") ";
-            write("INSERT INTO " + values.get("tableName") + columns + "VALUES(", values, columnsArr);
+            update("INSERT INTO " + values.get("tableName") + columns + "VALUES(", values, columnsArr);
             jLabelStatus.setText("Added successfully!");
-            refresh = true;
+            if (values.get("tableName") == "medicine") {
+                refreshMedicine = true;
+            } else if (values.get("tableName") == "product") {
+                refreshOther = true;
+            }
+
         } catch (NumberFormatException | SQLException e) {
+            jLabelStatus.setText(e.getMessage());
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
             jLabelStatus.setText(e.getMessage());
             System.out.println(e.getMessage());
         }
 
     }//GEN-LAST:event_jButtonAddActionPerformed
+
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButtonCancelActionPerformed
 
     @Override
     public ResultSet read(String query) {
@@ -491,7 +489,7 @@ public class AddProductWindow extends Window implements Database {
     }
 
     @Override
-    public void write(String insertQuery, Map<String, String> values, java.util.ArrayList<String> columns) throws SQLException {
+    public void update(String insertQuery, Map<String, String> values, java.util.ArrayList<String> columns) throws SQLException {
         try {
             connection = Database.openConnection();
             Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
