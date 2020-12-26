@@ -1,4 +1,3 @@
-//connection and parent class for all windows
 package nour.ppts;
 
 import java.sql.*;
@@ -6,43 +5,9 @@ import java.util.ArrayList;
 
 public abstract class Window extends javax.swing.JFrame {
 
-    public static Connection connection;
-    protected Window parent;
-
     static {
         System.out.println("class Window loading block called...");
-        dbToArrayLists();
-    }
-
-    //overwrites the medicine and otherProducts arrayLists with all enteries from their respective tables from the database;
-    protected static void dbToArrayLists() {
-        System.out.println("Populating arrays now...");
-        try {
-            //clearing the arrays
-            Medicine.allMedicines = new ArrayList<>(); 
-            OtherProduct.allOtherProducts = new ArrayList<>();
-            
-            //ResultSets with all enteries from the database
-            ResultSet medicineResult = Database.readAll("medicine");
-            ResultSet otherResult = Database.readAll("product");
-            
-            int medicineSize = Database.getResultSetSize(medicineResult);
-            int otherSize = Database.getResultSetSize(otherResult);
-            
-            System.out.println("Entering array population loops...");
-            for (int i = 0; i < medicineSize; i++) {
-                Medicine.allMedicines.add(new Medicine(medicineResult, i + 1));
-            }
-            for (int i = 0; i < otherSize; i++) {
-                OtherProduct.allOtherProducts.add(new OtherProduct(otherResult, i + 1));
-            }
-            
-            medicineResult.close();
-            otherResult.close();
-            System.out.println("Populated arrays successfully(and closed connection)...");
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        Database.dbToArrayLists();
     }
 
     public final void setTheme(String themeName) {

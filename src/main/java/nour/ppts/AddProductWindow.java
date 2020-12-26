@@ -1,3 +1,5 @@
+//used to add a new product to the database
+
 package nour.ppts;
 
 import java.awt.event.WindowAdapter;
@@ -6,24 +8,27 @@ import java.sql.*;
 import java.util.Map;
 import java.util.HashMap;
 
-public class AddProductWindow extends Window implements Database {
+public class AddProductWindow extends Window {
 
     public ProductsWindow parent;
+    //used to refresh the parent's tables if updated (won't refresh if no updates happened to save processing time)
     private Boolean refreshMedicine = false;
     private Boolean refreshOther = false;
 
+    
     public AddProductWindow(ProductsWindow parent) {
         this.parent = parent;
         setSize(440, 580);
         setResizable(false);
         this.setLocation(parent.getLocation().x, parent.getLocation().y - 60);
+        
         //hiding parent until addProductWindow is closed
         parent.setVisible(false);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent windowEvent) {
                 if (refreshMedicine == true || refreshOther == true) {
-                    Window.dbToArrayLists();
+                    Database.dbToArrayLists();
                 }
                 try {
                 if (refreshMedicine == true) {
@@ -382,11 +387,12 @@ public class AddProductWindow extends Window implements Database {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //DATABASE RELATED!!
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         // TODO add your handling code here:
         try {
-            //checking attibutes which much be non-null
+            //checking attibutes which much be non-null (must be not empty)
             if ((jTextFieldMedicineID.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelMedicine))
                     || ((jTextFieldOtherID.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelOther)))) {
                 throw new Exception("ID cannot be empty.");
@@ -399,9 +405,11 @@ public class AddProductWindow extends Window implements Database {
                     || ((jTextFieldOtherSerialNumber.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelOther)))) {
                 throw new Exception("SN cannot be empty.");
             }
-
+            
+            //will store all data entered in the textfields
             Map<String, String> values = new HashMap<>();
 
+            //checking which panel is selected (entering into Medicine or OtherProduct)
             if (jTabbedPane.getSelectedComponent().equals(jPanelMedicine)) {
 
                 values.put("tableName", "medicine");
@@ -449,6 +457,8 @@ public class AddProductWindow extends Window implements Database {
             } else {
                 jLabelStatus.setText("No tab seletced");
             }
+            
+            //columns string indicates which columns to send to the database (only sending non-empty values)
             String columns = "( ";
             java.util.ArrayList<String> columnsArr = new java.util.ArrayList<>();
             for (String k : values.keySet()) {
@@ -460,7 +470,8 @@ public class AddProductWindow extends Window implements Database {
             }
             columns = columns.substring(0, columns.length() - 2);
             columns += ") ";
-            update("INSERT INTO " + values.get("tableName") + columns + "VALUES(", values, columnsArr);
+            //SQL query that will be excuted being sent to insert method from Database clase
+            insert("INSERT INTO " + values.get("tableName") + columns + "VALUES(", values, columnsArr);
             jLabelStatus.setText("Added successfully!");
             if (values.get("tableName") == "medicine") {
                 refreshMedicine = true;
@@ -483,16 +494,9 @@ public class AddProductWindow extends Window implements Database {
         this.dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
-    @Override
-    public ResultSet read(String query) {
-        return null;
-    }
-
-    @Override
-    public void update(String insertQuery, Map<String, String> values, java.util.ArrayList<String> columns) throws SQLException {
+    //DATABASE RELATED!!
+    public void insert(String insertQuery, Map<String, String> values, java.util.ArrayList<String> columns) throws SQLException {
         try {
-            connection = Database.openConnection();
-            Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             for (String k : columns) {
                 try {
                     Double.parseDouble(values.get(k));
@@ -504,9 +508,7 @@ public class AddProductWindow extends Window implements Database {
             insertQuery = insertQuery.substring(0, insertQuery.length() - 2);
             insertQuery += ");";
             System.out.println(insertQuery);
-            st.executeUpdate(insertQuery);
-            connection.close();
-            st.close();
+            Database.insert(insertQuery);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             jLabelStatus.setText(e.getMessage());

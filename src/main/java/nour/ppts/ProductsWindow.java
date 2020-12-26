@@ -1,4 +1,4 @@
-//jFrame window to view/edit products database
+//view/edit products database
 package nour.ppts;
 
 import javax.swing.table.DefaultTableModel;
@@ -16,7 +16,7 @@ public class ProductsWindow extends Window {
         "ID", "Name", "Price (EGP)", "Stock", "Serial Number", "Description"
     };
 
-    public ProductsWindow(MainWindow parent) {
+    ProductsWindow(MainWindow parent) {
         this.parent = parent;
 
         //hiding parent until productsWindow is closed
@@ -41,6 +41,8 @@ public class ProductsWindow extends Window {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        addMouseDoubleClickListener();
         this.setLocation(500, 250);
     }
 
@@ -58,6 +60,7 @@ public class ProductsWindow extends Window {
         jButtonRemoveProduct = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jButtonAddProduct = new javax.swing.JButton();
+        jButtonPrint = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(51, 51, 51));
@@ -95,6 +98,13 @@ public class ProductsWindow extends Window {
             }
         });
 
+        jButtonPrint.setText("Print");
+        jButtonPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPrintActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -107,10 +117,11 @@ public class ProductsWindow extends Window {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
                         .addComponent(jButtonRemoveProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonPrint))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonAddProduct, jButtonRemoveProduct, jTextField1});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonAddProduct, jButtonPrint, jButtonRemoveProduct, jTextField1});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +130,8 @@ public class ProductsWindow extends Window {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jButtonRemoveProduct)
                     .addComponent(jButtonAddProduct)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPrint))
                 .addContainerGap())
         );
 
@@ -169,6 +181,31 @@ public class ProductsWindow extends Window {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addMouseDoubleClickListener() {
+        ProductsWindow thisWindow = this;
+        jTableMedicine.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                javax.swing.JTable table = (javax.swing.JTable) mouseEvent.getSource();
+                java.awt.Point point = mouseEvent.getPoint();
+                int row = table.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+                    UpdateProductWindow w = new UpdateProductWindow(thisWindow);
+                }
+            }
+        });
+        jTableOther.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                javax.swing.JTable table = (javax.swing.JTable) mouseEvent.getSource();
+                java.awt.Point point = mouseEvent.getPoint();
+                int row = table.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+                    UpdateProductWindow w = new UpdateProductWindow(thisWindow);
+                }
+            }
+        });
+
+    }
+
     private void jButtonAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddProductActionPerformed
         // TODO add your handling code here:
         AddProductWindow w = new AddProductWindow(this);
@@ -203,6 +240,11 @@ public class ProductsWindow extends Window {
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1MouseClicked
+
+    private void jButtonPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintActionPerformed
+        // TODO add your handling code here:
+        PrintProductsListWindow w = new PrintProductsListWindow(this);
+    }//GEN-LAST:event_jButtonPrintActionPerformed
 
     private DefaultTableModel initTableModel(String[] columns) {
         DefaultTableModel model = new javax.swing.table.DefaultTableModel(
@@ -269,6 +311,7 @@ public class ProductsWindow extends Window {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAddProduct;
+    private javax.swing.JButton jButtonPrint;
     private javax.swing.JButton jButtonRemoveProduct;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

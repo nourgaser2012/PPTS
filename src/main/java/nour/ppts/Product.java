@@ -1,4 +1,5 @@
-//parent class for medicine and otherProducts objects
+//parent parent class for medicine and otherProducts objects
+//contains all common attributes between Medicine and OtherProduct
 
 package nour.ppts;
 
@@ -10,9 +11,9 @@ public abstract class Product {
     private int id, stock, serialNumber;
     private double price;
     private Image image;
-    private String imageLocation;
+    private String imageLocation;        //used to store the image's location on the server
     private String name;
-
+    
     public int getId() {
         return id;
     }
@@ -73,7 +74,8 @@ public abstract class Product {
         this.image = productImage;
     }
 
-    public abstract void setData(ResultSet rs, int index);
-
-    public abstract String[] getDataArray();
+    public abstract void setData(ResultSet rs, int index); //DATABASE RELATED! Set the product's all data using a 
+    //ResultSet from the Database and the index (the number of the row which represents the product
+   
+    public abstract String[] getDataArray(); //get all the data of the product in same order as server columns as string
 }

@@ -14,6 +14,11 @@ public class Medicine extends Product {
     public static String[] attributeNames = {"medicineID", "medicineName", "medicineActiveSub", "medicinePrice",
         "medicineStock", "medicineImageLocation", "medicineDose", "medicineSerialNumber", "medicineLocation"};
 
+    //
+    Medicine(ResultSet rs, int index) {
+        setData(rs, index);
+    }
+
     public void setLocation(String location) {
         this.location = location;
     }
@@ -26,14 +31,19 @@ public class Medicine extends Product {
         this.dose = dose;
     }
 
-    public static void setNumberOfAttributes(int numberOfAttributes) {
-        Medicine.numberOfAttributes = numberOfAttributes;
+    public String getLocation() {
+        return location;
     }
 
-    public static void setAllMedicines(ArrayList<Medicine> allMedicines) {
-        Medicine.allMedicines = allMedicines;
+    public String getActiveSub() {
+        return activeSub;
     }
 
+    public double getDose() {
+        return dose;
+    }
+
+    //DATABASE RELATED!! Goes to index passed to it in the resultset returned from the db and calls setters using the data in it
     @Override
     public void setData(ResultSet rs, int index) {
         try {
@@ -52,30 +62,7 @@ public class Medicine extends Product {
         }
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public String getActiveSub() {
-        return activeSub;
-    }
-
-    public double getDose() {
-        return dose;
-    }
-
-    public static int getNumberOfAttributes() {
-        return numberOfAttributes;
-    }
-
-    public static ArrayList<Medicine> getAllMedicines() {
-        return allMedicines;
-    }
-
-    Medicine(ResultSet rs, int index) {
-        setData(rs, index);
-    }
-
+    //returns a string array with the object's (medicine data) in the same order of the columns in the database (medicine table)
     @Override
     public String[] getDataArray() {
         String[] arr = new String[numberOfAttributes];
