@@ -6,13 +6,13 @@ import java.util.ArrayList;
 public final class Database {
 
     //free online server on SmarterASP.net
-//    private static final String USERNAME = "a6cc0b_ppts";
-//    private static final String PASSWORD = "ppts1234";
-//    private static final String URL = "jdbc:mysql://mysql5044.site4now.net/db_a6cc0b_ppts";
+    private static final String USERNAME = "a6cc0b_ppts";
+    private static final String PASSWORD = "ppts1234";
+    private static final String URL = "jdbc:mysql://mysql5044.site4now.net/db_a6cc0b_ppts";
     //for local server only
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "1234";
-    private static final String URL = "jdbc:mysql://localhost:3306/ppts";
+//    private static final String USERNAME = "root";
+//    private static final String PASSWORD = "1234";
+//    private static final String URL = "jdbc:mysql://localhost:3306/ppts";
 
     static ResultSet select(String query) throws SQLException {
         Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
