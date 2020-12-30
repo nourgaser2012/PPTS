@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="2"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanelMain" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanelMain" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="jPanelMain">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jPanelBottom" linkSize="12" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTabbedPane" linkSize="12" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabelTitle" linkSize="12" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabelTitle" min="-2" pref="45" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jTabbedPane" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jPanelBottom" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabelTitle">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="18" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Add New Product"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JTabbedPane" name="jTabbedPane">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
+          </Properties>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="jPanelMedicine">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Medicine">
+                    <Property name="tabTitle" type="java.lang.String" value="Medicine"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jLabelMedicineName" linkSize="4" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelMedicineID" linkSize="4" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelMedicineStock" linkSize="4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelMedicinePrice" linkSize="4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelMedicineImageLocation" linkSize="4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelMedicineSerialNumber" linkSize="4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelMedicineDose" linkSize="4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelMedicineLocation" linkSize="4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabelMedicineActiveSub" min="-2" pref="101" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jTextFieldMedicineImageLocation" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
+                              <Component id="jTextFieldMedicineDose" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
+                              <Component id="jTextFieldMedicineStock" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
+                              <Component id="jTextFieldMedicinePrice" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
+                              <Component id="jTextFieldMedicineName" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
+                              <Component id="jTextFieldMedicineSerialNumber" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
+                              <Component id="jTextFieldMedicineID" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
+                              <Component id="jTextFieldMedicineActiveSub" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
+                              <Component id="jTextFieldMedicineLocation" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jLabelMedicineID" linkSize="2" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="jTextFieldMedicineID" linkSize="1" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jTextFieldMedicineName" linkSize="1" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="jLabelMedicineName" linkSize="2" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jLabelMedicinePrice" linkSize="2" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="jTextFieldMedicinePrice" linkSize="1" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jTextFieldMedicineStock" linkSize="1" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="jLabelMedicineStock" linkSize="2" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jLabelMedicineSerialNumber" linkSize="2" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="jTextFieldMedicineSerialNumber" linkSize="1" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jTextFieldMedicineImageLocation" linkSize="1" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="jLabelMedicineImageLocation" linkSize="2" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jTextFieldMedicineDose" linkSize="1" alignment="2" min="-2" pref="28" max="-2" attributes="0"/>
+                              <Component id="jLabelMedicineDose" linkSize="2" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jTextFieldMedicineActiveSub" linkSize="1" alignment="2" min="-2" pref="28" max="-2" attributes="0"/>
+                              <Component id="jLabelMedicineActiveSub" linkSize="2" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jTextFieldMedicineLocation" linkSize="1" alignment="2" min="-2" pref="28" max="-2" attributes="0"/>
+                              <Component id="jLabelMedicineLocation" linkSize="2" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JTextField" name="jTextFieldMedicineStock">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelMedicineImageLocation">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Image"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldMedicineID">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelMedicineID">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="ID"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelMedicinePrice">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Price"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelMedicineDose">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Dose"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelMedicineSerialNumber">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="SN"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldMedicineImageLocation">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelMedicineStock">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Stock"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelMedicineName">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Name"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldMedicineSerialNumber">
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldMedicineName">
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldMedicinePrice">
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldMedicineDose">
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldMedicineActiveSub">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelMedicineActiveSub">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Active Substance"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldMedicineLocation">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelMedicineLocation">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Location"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanelOther">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Other">
+                    <Property name="tabTitle" type="java.lang.String" value="Other"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jLabelOtherName" linkSize="8" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelOtherID" linkSize="8" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelOtherStock" linkSize="8" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelOtherPrice" linkSize="8" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelOtherImageLocation" linkSize="8" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelOtherSerialNumber" linkSize="8" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelOtherDescription" linkSize="8" alignment="0" min="-2" pref="74" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jTextFieldOtherImageLocation" alignment="2" pref="307" max="32767" attributes="0"/>
+                              <Component id="jTextFieldOtherDescription" alignment="2" max="32767" attributes="0"/>
+                              <Component id="jTextFieldOtherStock" alignment="2" max="32767" attributes="0"/>
+                              <Component id="jTextFieldOtherPrice" alignment="2" max="32767" attributes="0"/>
+                              <Component id="jTextFieldOtherName" alignment="2" max="32767" attributes="0"/>
+                              <Component id="jTextFieldOtherSerialNumber" alignment="2" max="32767" attributes="0"/>
+                              <Component id="jTextFieldOtherID" alignment="2" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jLabelOtherID" linkSize="11" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="jTextFieldOtherID" linkSize="7" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jTextFieldOtherName" linkSize="7" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="jLabelOtherName" linkSize="11" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jLabelOtherPrice" linkSize="11" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="jTextFieldOtherPrice" linkSize="7" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jTextFieldOtherStock" linkSize="7" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="jLabelOtherStock" linkSize="11" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jLabelOtherSerialNumber" linkSize="11" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="jTextFieldOtherSerialNumber" linkSize="7" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jTextFieldOtherImageLocation" linkSize="7" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="jLabelOtherImageLocation" linkSize="11" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="2" attributes="0">
+                              <Component id="jTextFieldOtherDescription" linkSize="7" alignment="2" min="-2" pref="28" max="-2" attributes="0"/>
+                              <Component id="jLabelOtherDescription" linkSize="11" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JTextField" name="jTextFieldOtherStock">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelOtherImageLocation">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Image"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldOtherID">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelOtherID">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="ID"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelOtherPrice">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Price"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelOtherDescription">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Description"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelOtherSerialNumber">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="SN"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldOtherImageLocation">
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelOtherStock">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Stock"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelOtherName">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Name"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldOtherSerialNumber">
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldOtherName">
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldOtherPrice">
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTextFieldOtherDescription">
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanelBottom">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabelStatus" linkSize="6" min="-2" pref="119" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jButtonAdd" linkSize="6" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jButtonCancel" linkSize="6" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButtonAdd" linkSize="5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonCancel" linkSize="5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelStatus" linkSize="5" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="jButtonAdd">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Add"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAddActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButtonCancel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Close"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCancelActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabelStatus">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Error Message"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>
