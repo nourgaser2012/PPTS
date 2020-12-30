@@ -1,5 +1,4 @@
 //used to add a new product to the database
-
 package nour.ppts;
 
 import java.awt.event.WindowAdapter;
@@ -7,6 +6,7 @@ import java.awt.event.WindowEvent;
 import java.sql.*;
 import java.util.Map;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 
 public class AddProductWindow extends Window {
 
@@ -15,33 +15,18 @@ public class AddProductWindow extends Window {
     private Boolean refreshMedicine = false;
     private Boolean refreshOther = false;
 
-    
     public AddProductWindow(ProductsWindow parent) {
         this.parent = parent;
         setSize(440, 580);
         setResizable(false);
-        this.setLocation(parent.getLocation().x, parent.getLocation().y - 60);
-        
+        setLocationRelativeTo(parent);
+
         //hiding parent until addProductWindow is closed
-        parent.setVisible(false);
+//        parent.setVisible(false);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent windowEvent) {
-                if (refreshMedicine == true || refreshOther == true) {
-                    Database.dbToArrayLists();
-                }
-                try {
-                if (refreshMedicine == true) {
-                    parent.refreshMedicineTable();
-                }
-                if (refreshOther == true) {
-                    parent.refreshOtherTable();
-                }
-                }
-                catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
-                parent.setVisible(true);
+//                parent.setVisible(true);
             }
         });
 
@@ -387,7 +372,7 @@ public class AddProductWindow extends Window {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-    
+
     //DATABASE RELATED!!
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         // TODO add your handling code here:
@@ -405,7 +390,7 @@ public class AddProductWindow extends Window {
                     || ((jTextFieldOtherSerialNumber.getText().isEmpty() && jTabbedPane.getSelectedComponent().equals(jPanelOther)))) {
                 throw new Exception("SN cannot be empty.");
             }
-            
+
             //will store all data entered in the textfields
             Map<String, String> values = new HashMap<>();
 
@@ -457,7 +442,7 @@ public class AddProductWindow extends Window {
             } else {
                 jLabelStatus.setText("No tab seletced");
             }
-            
+
             //columns string indicates which columns to send to the database (only sending non-empty values)
             String columns = "( ";
             java.util.ArrayList<String> columnsArr = new java.util.ArrayList<>();
@@ -474,14 +459,17 @@ public class AddProductWindow extends Window {
             insert("INSERT INTO " + values.get("tableName") + columns + "VALUES(", values, columnsArr);
             jLabelStatus.setText("Added successfully!");
             if (values.get("tableName") == "medicine") {
-                refreshMedicine = true;
+                Database.refreshMedicinesArrayList();
+                parent.refreshMedicineTable();
             } else if (values.get("tableName") == "product") {
-                refreshOther = true;
+                Database.refreshOtherProductsArrayList();
+                parent.refreshOtherTable();
             }
 
         } catch (NumberFormatException | SQLException e) {
             jLabelStatus.setText(e.getMessage());
             System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (Exception e) {
             jLabelStatus.setText(e.getMessage());
             System.out.println(e.getMessage());

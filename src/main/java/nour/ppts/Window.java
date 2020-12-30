@@ -1,13 +1,18 @@
 package nour.ppts;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public abstract class Window extends javax.swing.JFrame {
 
     static {
         System.out.println("class Window loading block called...");
-        Database.dbToArrayLists();
+        try {
+        Database.refreshMedicinesArrayList();
+        Database.refreshOtherProductsArrayList();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public final void setTheme(String themeName) {
@@ -40,7 +45,12 @@ public abstract class Window extends javax.swing.JFrame {
         System.out.println("Creating new window...");
         setTheme("Nimbus");
         this.setVisible(true);
-        setLocation(500, 250);
+        setSize(750, 500);
+        setResizable(false);
+//        java.awt.Dimension d = new java.awt.Dimension(600, 350);
+//        setMinimumSize(d);
+        setPreferredSize(getSize());
+        setLocationRelativeTo(null);
         setTitle("PPTS");
         //add any other styling or common functionality for all windows here;
     }

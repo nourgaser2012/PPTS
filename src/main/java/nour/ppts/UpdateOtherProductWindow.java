@@ -7,11 +7,11 @@ package nour.ppts;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class UpdateProductWindow extends Window {
+public class UpdateOtherProductWindow extends Window {
 
     ProductsWindow parent;
 
-    public UpdateProductWindow(ProductsWindow parent) {
+    public UpdateOtherProductWindow(ProductsWindow parent) {
         this.parent = parent;
 
         //hiding parent until productsWindow is closed

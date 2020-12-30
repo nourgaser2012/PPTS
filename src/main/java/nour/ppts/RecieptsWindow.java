@@ -28,9 +28,7 @@ public class RecieptsWindow extends Window {
                 parent.setVisible(true);
             }
         });
-
         initComponents();
-
     }
 
     @SuppressWarnings("unchecked")
@@ -69,7 +67,7 @@ public class RecieptsWindow extends Window {
                 .addComponent(jButtonNewReciept)
                 .addGap(53, 53, 53)
                 .addComponent(jButtonPrint)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(392, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -80,7 +78,7 @@ public class RecieptsWindow extends Window {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(73, 73, 73)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNewReciept)
                     .addComponent(jButtonPrint))
