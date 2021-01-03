@@ -1,18 +1,21 @@
 //view/edit products database
 package nour.ppts;
 
-import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.awt.event.*;
 import java.sql.SQLException;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import javax.swing.table.DefaultTableModel;
 
 public class ProductsWindow extends Window {
 
     public MainWindow parent;
-    private static String[] medicineColumns = {
+    private static final String[] medicineColumns = {
         "ID", "Name", "Price (EGP)", "Stock", "Active Substance", "Dose (mg)", "Location", "Serial Number"
     };
-    private static String[] otherColumns = {
+    private static final String[] otherColumns = {
         "ID", "Name", "Price (EGP)", "Stock", "Serial Number", "Description"
     };
 
@@ -30,18 +33,39 @@ public class ProductsWindow extends Window {
 
         medicineTableModel = initTableModel(medicineColumns);
         otherTableModel = initTableModel(otherColumns);
+
         initComponents();
 
-        jTableMedicine.setDefaultEditor(Object.class, null); //disabling table fields editing
+        //disabling table fields editing
+        jTableMedicine.setDefaultEditor(Object.class, null);
         jTableOther.setDefaultEditor(Object.class, null);
 
+        //Loading values from Product ArrayLists into table models
         try {
             addToMedicineTable(Medicine.allMedicines);
             addToOtherTable(OtherProduct.allOtherProducts);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Error!", ERROR);
         }
 
+        jTextFieldSearch.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                jTextFieldSearchActionPerformed(null);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                jTextFieldSearchActionPerformed(null);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+
+        //MouseListerner for UpdateProductWindow
         addMouseDoubleClickListener();
     }
 
@@ -87,10 +111,9 @@ public class ProductsWindow extends Window {
             }
         });
 
-        jTextFieldSearch.setText("Search");
-        jTextFieldSearch.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextFieldSearchMouseClicked(evt);
+        jTextFieldSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldSearchActionPerformed(evt);
             }
         });
 
@@ -184,7 +207,7 @@ public class ProductsWindow extends Window {
                 int row = table.rowAtPoint(point);
                 if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
                     for (Medicine medicine : Medicine.allMedicines) {
-                        if (medicine.getId() == Integer.parseInt(medicineTableModel.getValueAt(jTableMedicine.getSelectedRow(), 0).toString())) {
+                        if (medicine.getId() == Integer.parseInt(jTableMedicine.getModel().getValueAt(jTableMedicine.getSelectedRow(), 0).toString())) {
                             UpdateMedicineWindow w = new UpdateMedicineWindow(thisWindow, medicine);
                             break;
                         }
@@ -199,7 +222,7 @@ public class ProductsWindow extends Window {
                 int row = table.rowAtPoint(point);
                 if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
                     for (OtherProduct product : OtherProduct.allOtherProducts) {
-                        if (product.getId() == Integer.parseInt(otherTableModel.getValueAt(jTableOther.getSelectedRow(), 0).toString())) {
+                        if (product.getId() == Integer.parseInt(jTableOther.getModel().getValueAt(jTableOther.getSelectedRow(), 0).toString())) {
                             UpdateOtherProductWindow w = new UpdateOtherProductWindow(thisWindow, product);
                             break;
                         }
@@ -207,7 +230,6 @@ public class ProductsWindow extends Window {
                 }
             }
         });
-
     }
 
     private void jButtonAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddProductActionPerformed
@@ -222,14 +244,14 @@ public class ProductsWindow extends Window {
                 int[] indexes = jTableMedicine.getSelectedRows();
                 for (int index : indexes) {
                     int id = Integer.parseInt(medicineTableModel.getValueAt(index, 0).toString());
-                    removeFromMedicineTable(id);
+                    removeMedicine(id);
                 }
                 refreshMedicineTable();
             } else {
                 int[] indexes = jTableOther.getSelectedRows();
                 for (int index : indexes) {
                     int id = Integer.parseInt(otherTableModel.getValueAt(index, 0).toString());
-                    removeFromOtherTable(id);
+                    removeOther(id);
                 }
                 refreshOtherTable();
             }
@@ -241,14 +263,42 @@ public class ProductsWindow extends Window {
         }
     }//GEN-LAST:event_jButtonRemoveProductActionPerformed
 
-    private void jTextFieldSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldSearchMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldSearchMouseClicked
-
     private void jButtonPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintActionPerformed
         // TODO add your handling code here:
         PrintProductsListWindow w = new PrintProductsListWindow(this);
     }//GEN-LAST:event_jButtonPrintActionPerformed
+
+    private void jTextFieldSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSearchActionPerformed
+        // TODO add your handling code here:
+        String search = jTextFieldSearch.getText();
+        if (jTabbedPane.getSelectedIndex() == 0) {
+            if (!jTextFieldSearch.getText().isEmpty()) {
+                DefaultTableModel newModel = initTableModel(medicineColumns);
+                for (var v : medicineTableModel.getDataVector()) {
+                    if (v.get(0).equals(search) || v.get(v.size() - 1).toString().contains(search) || v.get(1).toString().contains(search)) {
+                        newModel.addRow(v);
+                    }
+                }
+                jTableMedicine.setModel(newModel);
+            } else {
+                jTableMedicine.setModel(medicineTableModel);
+            }
+        }
+        else {
+            if (!jTextFieldSearch.getText().isEmpty()) {
+                DefaultTableModel newModel = initTableModel(otherColumns);
+                for (var v : otherTableModel.getDataVector()) {
+                    if (v.get(0).equals(search) || v.get(v.size() - 2).toString().contains(search) || v.get(1).toString().contains(search)) {
+                        newModel.addRow(v);
+                    }
+                }
+                jTableOther.setModel(newModel);
+            } else {
+                jTableOther.setModel(otherTableModel);
+            }
+        }
+
+    }//GEN-LAST:event_jTextFieldSearchActionPerformed
 
     private DefaultTableModel initTableModel(String[] columns) {
         DefaultTableModel model = new javax.swing.table.DefaultTableModel(
@@ -287,7 +337,7 @@ public class ProductsWindow extends Window {
     }
 
     //remove one Medicine
-    public void removeFromMedicineTable(int id) throws SQLException {
+    public void removeMedicine(int id) throws SQLException {
         Database.remove("medicine", id);
     }
 
@@ -308,7 +358,7 @@ public class ProductsWindow extends Window {
     }
 
     //remove one OtherProduct
-    public void removeFromOtherTable(int id) throws Exception {
+    public void removeOther(int id) throws Exception {
         Database.remove("product", id);
     }
 
@@ -326,6 +376,6 @@ public class ProductsWindow extends Window {
     private javax.swing.JTable jTableOther;
     private javax.swing.JTextField jTextFieldSearch;
     // End of variables declaration//GEN-END:variables
-    static private DefaultTableModel medicineTableModel;
+    private DefaultTableModel medicineTableModel;
     private DefaultTableModel otherTableModel;
 }

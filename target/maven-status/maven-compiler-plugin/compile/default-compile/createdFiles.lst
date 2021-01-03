@@ -1,6 +1,7 @@
 nour\ppts\Printable.class
 nour\ppts\AddProductWindow$1.class
 nour\ppts\PrintRecieptWindow$1.class
+nour\ppts\MainWindow$3.class
 nour\ppts\Product.class
 nour\ppts\MainWindow$1.class
 nour\ppts\MainWindow.class
@@ -10,10 +11,13 @@ nour\ppts\ProductsWindow$4.class
 nour\ppts\GenerateRecieptWindow.class
 nour\ppts\PrintRecieptWindow.class
 nour\ppts\RecieptsWindow$3.class
+nour\ppts\UpdateMedicineWindow$2.class
 nour\ppts\Window.class
 nour\ppts\Database.class
+nour\ppts\ProductsWindow$8.class
 nour\ppts\GenerateRecieptWindow$1.class
 nour\ppts\UpdateOtherProductWindow.class
+nour\ppts\UpdateOtherProductWindow$2.class
 nour\ppts\UpdateMedicineWindow$1.class
 nour\ppts\UpdateMedicineWindow.class
 nour\ppts\ProductsWindow$6.class
@@ -25,6 +29,7 @@ nour\ppts\Main.class
 nour\ppts\ProductsWindow$5.class
 nour\ppts\PrintRecieptListWindow.class
 nour\ppts\Reciept.class
+nour\ppts\MainWindow$4.class
 nour\ppts\ProductsWindow$7.class
 nour\ppts\AddProductWindow.class
 nour\ppts\AddProductWindow$2.class

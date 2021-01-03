@@ -44,7 +44,6 @@ public abstract class Window extends javax.swing.JFrame {
     Window() {
         System.out.println("Creating new window...");
         setTheme("Nimbus");
-        this.setVisible(true);
         setSize(750, 450);
         setResizable(false);
 //        java.awt.Dimension d = new java.awt.Dimension(600, 350);
@@ -52,6 +51,7 @@ public abstract class Window extends javax.swing.JFrame {
         setPreferredSize(getSize());
         setLocationRelativeTo(null);
         setTitle("PPTS");
+        this.setVisible(true);
         //add any other styling or common functionality for all windows here;
     }
 

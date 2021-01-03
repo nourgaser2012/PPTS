@@ -21,7 +21,6 @@ public class RecieptsWindow extends Window {
 
         this.parent = parent;
         //hiding parent until productsWindow is closed
-        parent.setVisible(false);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent windowEvent) {
@@ -29,6 +28,7 @@ public class RecieptsWindow extends Window {
             }
         });
         initComponents();
+        parent.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")

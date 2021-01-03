@@ -49,7 +49,7 @@ public class MainWindow extends Window {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon("F:\\Coding\\Java Winter 2020-2021\\PPTS-DatabaseInterface\\PPTS-DatabaseInterface\\Icons\\hand_with_a_pill_64px.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("E:\\Code\\Java Practice\\PPTS\\Icons\\hand_with_a_pill_64px.png")); // NOI18N
         jLabel1.setText("Pharmacy Product Tracking System (PPTS)");
 
         jPanelServerForm.setBackground(new java.awt.Color(222, 222, 222));
@@ -143,7 +143,7 @@ public class MainWindow extends Window {
         jLabelButtonReciepts.setFont(jLabelButtonReciepts.getFont().deriveFont(jLabelButtonReciepts.getFont().getStyle() | java.awt.Font.BOLD, jLabelButtonReciepts.getFont().getSize()+6));
         jLabelButtonReciepts.setForeground(new java.awt.Color(0, 0, 0));
         jLabelButtonReciepts.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelButtonReciepts.setIcon(new javax.swing.ImageIcon("F:\\Coding\\Java Winter 2020-2021\\PPTS-DatabaseInterface\\PPTS-DatabaseInterface\\Icons\\receipt_64px.png")); // NOI18N
+        jLabelButtonReciepts.setIcon(new javax.swing.ImageIcon("E:\\Code\\Java Practice\\PPTS\\Icons\\receipt_64px.png")); // NOI18N
         jLabelButtonReciepts.setText("Generate Reciept");
         jLabelButtonReciepts.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -181,7 +181,7 @@ public class MainWindow extends Window {
         jLabelButtonProducts.setFont(jLabelButtonProducts.getFont().deriveFont(jLabelButtonProducts.getFont().getStyle() | java.awt.Font.BOLD, jLabelButtonProducts.getFont().getSize()+6));
         jLabelButtonProducts.setForeground(new java.awt.Color(0, 0, 0));
         jLabelButtonProducts.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelButtonProducts.setIcon(new javax.swing.ImageIcon("F:\\Coding\\Java Winter 2020-2021\\PPTS-DatabaseInterface\\PPTS-DatabaseInterface\\Icons\\pill_64px.png")); // NOI18N
+        jLabelButtonProducts.setIcon(new javax.swing.ImageIcon("E:\\Code\\Java Practice\\PPTS\\Icons\\pill_64px.png")); // NOI18N
         jLabelButtonProducts.setText("View/Update Products");
         jLabelButtonProducts.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -321,9 +321,6 @@ public class MainWindow extends Window {
         if (!jTextFieldUsername.getText().isEmpty() && !String.valueOf(jPasswordField.getPassword()).isEmpty()) {
             for (String[] server : Database.servers) {
                 if (server[2].contains(selectedServerAddress)) {
-                    System.out.println(jTextFieldUsername.getText() + "  - username entered");
-                    System.out.println(String.valueOf(jPasswordField.getPassword()) + "  - password entered");
-
                     if ((server[0].equals(jTextFieldUsername.getText())) && (server[1].equals(String.valueOf(jPasswordField.getPassword())))) {
                         Database.setUsername(server[0]);
                         Database.setPassword(server[1]);
