@@ -1,6 +1,5 @@
 //class for non-medicine products;
 //same concept as Medicine class, for explanations check Medicine class.
-
 package nour.ppts;
 
 import java.sql.ResultSet;
@@ -18,6 +17,7 @@ public class OtherProduct extends Product {
 
     OtherProduct(ResultSet rs, int index) {
         setData(rs, index);
+        initializeIfNotInitialized();
     }
 
     public String getDescription() {
@@ -41,6 +41,16 @@ public class OtherProduct extends Product {
             setDescription(st.getString("productDescription"));
         } catch (SQLException ex) {
             System.out.println("Error!\t" + ex.getMessage());
+        }
+    }
+
+    @Override
+    protected void initializeIfNotInitialized() {
+        if (getDescription() == null) {
+            setDescription("Undefined");
+        }
+        if (getImageLocation() == null) {
+            setImageLocation("Undefined");
         }
     }
 

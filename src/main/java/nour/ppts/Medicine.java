@@ -17,6 +17,7 @@ public class Medicine extends Product {
     //
     Medicine(ResultSet rs, int index) {
         setData(rs, index);
+        initializeIfNotInitialized();
     }
 
     public void setLocation(String location) {
@@ -43,7 +44,7 @@ public class Medicine extends Product {
         return dose;
     }
 
-    //DATABASE RELATED!! Goes to index passed to it in the resultset returned from the db and calls setters using the data in it
+    //Goes to index passed to it in the resultset returned from the db and calls setters using the data in it
     @Override
     public void setData(ResultSet rs, int index) {
         try {
@@ -59,6 +60,16 @@ public class Medicine extends Product {
             setActiveSub(rs.getString("medicineActiveSub"));
         } catch (SQLException ex) {
             System.out.println("Error!\t" + ex.getMessage());
+        }
+    }
+
+    @Override
+    protected void initializeIfNotInitialized() {
+        if (getImageLocation() == null) {
+            setImageLocation("Undefined");
+        }
+        if (getLocation() == null) {
+            setLocation("Undefined");
         }
     }
 

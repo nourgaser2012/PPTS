@@ -21,12 +21,13 @@ public class AddProductWindow extends Window {
         setResizable(false);
         setLocationRelativeTo(parent);
 
-        //hiding parent until addProductWindow is closed
-//        parent.setVisible(false);
+        //freezing parent until addProductWindow is closed
+        parent.setFocusableWindowState(false);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent windowEvent) {
-//                parent.setVisible(true);
+                parent.setFocusableWindowState(true);
+                parent.toFront();
             }
         });
 
@@ -447,7 +448,7 @@ public class AddProductWindow extends Window {
             String columns = "( ";
             java.util.ArrayList<String> columnsArr = new java.util.ArrayList<>();
             for (String k : values.keySet()) {
-                if (k == "tableName") {
+                if ("tableName".equals(k)) {
                     continue;
                 }
                 columns += k + ", ";
@@ -458,10 +459,10 @@ public class AddProductWindow extends Window {
             //SQL query that will be excuted being sent to insert method from Database clase
             insert("INSERT INTO " + values.get("tableName") + columns + "VALUES(", values, columnsArr);
             jLabelStatus.setText("Added successfully!");
-            if (values.get("tableName") == "medicine") {
+            if ("medicine".equals(values.get("tableName"))) {
                 Database.refreshMedicinesArrayList();
                 parent.refreshMedicineTable();
-            } else if (values.get("tableName") == "product") {
+            } else if ("product".equals(values.get("tableName"))) {
                 Database.refreshOtherProductsArrayList();
                 parent.refreshOtherTable();
             }
@@ -469,10 +470,11 @@ public class AddProductWindow extends Window {
         } catch (NumberFormatException | SQLException e) {
             jLabelStatus.setText(e.getMessage());
             System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(this, e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             jLabelStatus.setText(e.getMessage());
             System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Incomplete Data", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButtonAddActionPerformed

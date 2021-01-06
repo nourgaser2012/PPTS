@@ -20,6 +20,7 @@ nour\ppts\UpdateOtherProductWindow.class
 nour\ppts\UpdateOtherProductWindow$2.class
 nour\ppts\UpdateMedicineWindow$1.class
 nour\ppts\UpdateMedicineWindow.class
+nour\ppts\GenerateRecieptWindow$3.class
 nour\ppts\ProductsWindow$6.class
 nour\ppts\PrintProductsListWindow$1.class
 nour\ppts\MainWindow$2.class
@@ -39,6 +40,8 @@ nour\ppts\ProductsWindow$2.class
 nour\ppts\AddProductWindow$3.class
 nour\ppts\RecieptsWindow$1.class
 nour\ppts\OtherProduct.class
+nour\ppts\GenerateRecieptWindow$2.class
 nour\ppts\Medicine.class
+nour\ppts\GenerateRecieptWindow$4.class
 nour\ppts\UpdateOtherProductWindow$1.class
 nour\ppts\PrintProductsListWindow.class

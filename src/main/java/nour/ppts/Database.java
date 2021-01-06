@@ -1,6 +1,9 @@
 package nour.ppts;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public final class Database {
@@ -14,10 +17,11 @@ public final class Database {
     private static String password;// = "1234";
     private static String url; //= "jdbc:mysql://localhost:3306/ppts";
 
-    private static String[] localServer = {"root", "1234", "jdbc:mysql://localhost:3306/ppts"};
-    private static String[] smarterASPServer = {"a6cc0b_ppts", "ppts1234", "jdbc:mysql://mysql5044.site4now.net/db_a6cc0b_ppts"};
-    public static String[][] servers = {smarterASPServer, localServer};
-    
+    private static final String[] localServer = {"root", "1234", "jdbc:mysql://localhost:3306/ppts"};
+    private static final String[] smarterASPServer = {"a6cc0b_ppts", "ppts1234", "jdbc:mysql://mysql5044.site4now.net/db_a6cc0b_ppts"};
+    public static String[][] servers = {localServer, smarterASPServer};
+
+    public static String dateFormat = "yyyy-MM-dd hh:mm a";
 
     private static void selectServer(String[] server) {
         username = server[0];
@@ -62,6 +66,34 @@ public final class Database {
         st.executeUpdate(query);
         st.close();
         conn.close();
+    }
+
+    static void update(int id, String table, java.util.Map<String, String> data) throws SQLException {
+        Connection conn = DriverManager.getConnection(url, username, password);
+        Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        ResultSet rs = st.executeQuery("SELECT * FROM " + table + " WHERE " + table + "ID=" + id + ";");
+        rs.first();
+
+        for (int i = 0; i < data.size(); i++) {
+            String key = data.keySet().toArray()[i].toString();
+            String value = data.get(data.keySet().toArray()[i].toString());
+            switch (key) {
+                case "medicineName","medicineActiveSub", "medicineImageLocation", "medicineLocation"
+                        ,"productName", "productDescription", "productImageLocation" -> {
+                    rs.updateString(key, value);
+                }
+                case "medicinePrice", "medicineDose", "productPrice", "" -> {
+                    rs.updateDouble(key, Double.parseDouble(value));
+                }
+                case "medicineStock", "medicineSerialNumber", "productStock", "productSerialNumber" -> {
+                    rs.updateInt(key, Integer.parseInt(value));
+                }
+            }
+        }
+        rs.updateRow();
+        conn.close();
+        st.close();
+        rs.close();
     }
 
     //refrshes the ArrayList from the database: 
@@ -130,4 +162,17 @@ public final class Database {
         Database.url = url;
     }
 
+    public static String getCurrentDateString() throws ParseException {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
+        String date = java.time.LocalDateTime.now().format(dateTimeFormatter);
+        return date;
+    }
+
+    public static java.util.Date getCurrentDate() throws ParseException {
+        SimpleDateFormat simpleDateFormatter = new SimpleDateFormat(dateFormat);
+        java.util.Date date;
+        String dateString = getCurrentDateString();
+        date = simpleDateFormatter.parse(dateString);
+        return date;
+    }
 }

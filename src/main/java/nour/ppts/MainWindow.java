@@ -7,7 +7,10 @@ import javax.swing.JOptionPane;
 
 public class MainWindow extends Window {
 
+    Boolean connectedToDb;
+
     public MainWindow() {
+        connectedToDb = false;
         initComponents();
         String[] serverAddresses = new String[Database.servers.length];
         int index = 0;
@@ -17,6 +20,8 @@ public class MainWindow extends Window {
         }
         comboBoxModel = new DefaultComboBoxModel(serverAddresses);
         jComboBoxServer.setModel(comboBoxModel);
+        
+//        jButtonConnectActionPerformed(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -57,7 +62,7 @@ public class MainWindow extends Window {
         jTextFieldUsername.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldUsername.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextFieldUsername.setForeground(new java.awt.Color(0, 0, 0));
-        jTextFieldUsername.setText("a6cc0b_ppts");
+        jTextFieldUsername.setText("root");
         jTextFieldUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldUsernameActionPerformed(evt);
@@ -90,7 +95,7 @@ public class MainWindow extends Window {
         jPasswordField.setBackground(new java.awt.Color(255, 255, 255));
         jPasswordField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPasswordField.setForeground(new java.awt.Color(0, 0, 0));
-        jPasswordField.setText("ppts1234");
+        jPasswordField.setText("1234");
 
         javax.swing.GroupLayout jPanelServerFormLayout = new javax.swing.GroupLayout(jPanelServerForm);
         jPanelServerForm.setLayout(jPanelServerFormLayout);
@@ -275,7 +280,11 @@ public class MainWindow extends Window {
 
     private void jLabelButtonProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelButtonProductsMouseClicked
         // TODO add your handling code here:
-        ProductsWindow w = new ProductsWindow(this);
+        if (connectedToDb == true) {
+            ProductsWindow w = new ProductsWindow(this);
+        } else {
+            JOptionPane.showMessageDialog(this, "Please connect to a database first.", "Not Connected", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jLabelButtonProductsMouseClicked
 
     private void jLabelButtonProductsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelButtonProductsMouseEntered
@@ -294,7 +303,11 @@ public class MainWindow extends Window {
 
     private void jLabelButtonRecieptsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelButtonRecieptsMouseClicked
         // TODO add your handling code here:
-        RecieptsWindow w = new RecieptsWindow(this);
+        if (connectedToDb == true) {
+            RecieptsWindow w = new RecieptsWindow(this);
+        } else {
+            JOptionPane.showMessageDialog(this, "Please connect to a database first.", "Not Connected", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jLabelButtonRecieptsMouseClicked
 
     private void jLabelButtonRecieptsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelButtonRecieptsMouseEntered
@@ -330,6 +343,7 @@ public class MainWindow extends Window {
                             Database.refreshOtherProductsArrayList();
 //                        Database.refreshRecieptsProductsArrayList();
                             JOptionPane.showMessageDialog(this, "Connected to " + server[2] + " successfully.");
+                            connectedToDb = true;
                         } catch (java.sql.SQLException e) {
                             JOptionPane.showMessageDialog(this, e.getMessage());
                         }

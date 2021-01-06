@@ -76,6 +76,8 @@ public abstract class Product {
 
     public abstract void setData(ResultSet rs, int index); //DATABASE RELATED! Set the product's all data using a 
     //ResultSet from the Database and the index (the number of the row which represents the product
+    
+    protected abstract void initializeIfNotInitialized();
    
     public abstract String[] getDataArray(); //get all the data of the product in same order as server columns as string
 }
