@@ -6,14 +6,15 @@ import java.awt.event.WindowEvent;
 import java.sql.*;
 import java.util.Map;
 import java.util.HashMap;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class AddProductWindow extends Window {
 
     public ProductsWindow parent;
-    //used to refresh the parent's tables if updated (won't refresh if no updates happened to save processing time)
-    private Boolean refreshMedicine = false;
-    private Boolean refreshOther = false;
 
     public AddProductWindow(ProductsWindow parent) {
         this.parent = parent;
@@ -60,6 +61,7 @@ public class AddProductWindow extends Window {
         jLabelMedicineActiveSub = new javax.swing.JLabel();
         jTextFieldMedicineLocation = new javax.swing.JTextField();
         jLabelMedicineLocation = new javax.swing.JLabel();
+        jButtonMedicineBrowse = new javax.swing.JButton();
         jPanelOther = new javax.swing.JPanel();
         jTextFieldOtherStock = new javax.swing.JTextField();
         jLabelOtherImageLocation = new javax.swing.JLabel();
@@ -75,6 +77,7 @@ public class AddProductWindow extends Window {
         jTextFieldOtherName = new javax.swing.JTextField();
         jTextFieldOtherPrice = new javax.swing.JTextField();
         jTextFieldOtherDescription = new javax.swing.JTextField();
+        jButtonOtherBrowse = new javax.swing.JButton();
         jPanelBottom = new javax.swing.JPanel();
         jButtonAdd = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
@@ -99,6 +102,12 @@ public class AddProductWindow extends Window {
 
         jLabelMedicineSerialNumber.setText("SN");
 
+        jTextFieldMedicineImageLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldMedicineImageLocationActionPerformed(evt);
+            }
+        });
+
         jLabelMedicineStock.setText("Stock");
 
         jLabelMedicineName.setText("Name");
@@ -106,6 +115,13 @@ public class AddProductWindow extends Window {
         jLabelMedicineActiveSub.setText("Active Substance");
 
         jLabelMedicineLocation.setText("Location");
+
+        jButtonMedicineBrowse.setText("Browse");
+        jButtonMedicineBrowse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMedicineBrowseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelMedicineLayout = new javax.swing.GroupLayout(jPanelMedicine);
         jPanelMedicine.setLayout(jPanelMedicineLayout);
@@ -128,22 +144,26 @@ public class AddProductWindow extends Window {
                         .addContainerGap()
                         .addComponent(jLabelMedicineActiveSub, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextFieldMedicineImageLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldMedicineDose, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldMedicineStock, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldMedicinePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldMedicineName, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldMedicineSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldMedicineID, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldMedicineActiveSub, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldMedicineLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMedicineLayout.createSequentialGroup()
+                        .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jTextFieldMedicineDose)
+                            .addComponent(jTextFieldMedicineStock)
+                            .addComponent(jTextFieldMedicinePrice)
+                            .addComponent(jTextFieldMedicineName)
+                            .addComponent(jTextFieldMedicineSerialNumber)
+                            .addComponent(jTextFieldMedicineID)
+                            .addComponent(jTextFieldMedicineActiveSub)
+                            .addComponent(jTextFieldMedicineLocation))
+                        .addGap(10, 10, 10))
+                    .addGroup(jPanelMedicineLayout.createSequentialGroup()
+                        .addComponent(jTextFieldMedicineImageLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonMedicineBrowse)
+                        .addGap(12, 12, 12))))
         );
 
         jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabelMedicineDose, jLabelMedicineID, jLabelMedicineImageLocation, jLabelMedicineLocation, jLabelMedicineName, jLabelMedicinePrice, jLabelMedicineSerialNumber, jLabelMedicineStock});
-
-        jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextFieldMedicineActiveSub, jTextFieldMedicineDose, jTextFieldMedicineID, jTextFieldMedicineImageLocation, jTextFieldMedicineLocation, jTextFieldMedicineName, jTextFieldMedicinePrice, jTextFieldMedicineSerialNumber, jTextFieldMedicineStock});
 
         jPanelMedicineLayout.setVerticalGroup(
             jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,9 +189,10 @@ public class AddProductWindow extends Window {
                     .addComponent(jLabelMedicineSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldMedicineSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelMedicineImageLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldMedicineImageLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelMedicineImageLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonMedicineBrowse))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldMedicineDose, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,7 +208,7 @@ public class AddProductWindow extends Window {
                 .addContainerGap())
         );
 
-        jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextFieldMedicineActiveSub, jTextFieldMedicineDose, jTextFieldMedicineID, jTextFieldMedicineImageLocation, jTextFieldMedicineLocation, jTextFieldMedicineName, jTextFieldMedicinePrice, jTextFieldMedicineSerialNumber, jTextFieldMedicineStock});
+        jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonMedicineBrowse, jTextFieldMedicineActiveSub, jTextFieldMedicineDose, jTextFieldMedicineID, jTextFieldMedicineImageLocation, jTextFieldMedicineLocation, jTextFieldMedicineName, jTextFieldMedicinePrice, jTextFieldMedicineSerialNumber, jTextFieldMedicineStock});
 
         jPanelMedicineLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelMedicineActiveSub, jLabelMedicineDose, jLabelMedicineID, jLabelMedicineImageLocation, jLabelMedicineLocation, jLabelMedicineName, jLabelMedicinePrice, jLabelMedicineSerialNumber, jLabelMedicineStock});
 
@@ -207,6 +228,13 @@ public class AddProductWindow extends Window {
 
         jLabelOtherName.setText("Name");
 
+        jButtonOtherBrowse.setText("Browse");
+        jButtonOtherBrowse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOtherBrowseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelOtherLayout = new javax.swing.GroupLayout(jPanelOther);
         jPanelOther.setLayout(jPanelOtherLayout);
         jPanelOtherLayout.setHorizontalGroup(
@@ -222,14 +250,17 @@ public class AddProductWindow extends Window {
                     .addComponent(jLabelOtherSerialNumber)
                     .addComponent(jLabelOtherDescription, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextFieldOtherImageLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-                    .addComponent(jTextFieldOtherDescription)
-                    .addComponent(jTextFieldOtherStock)
-                    .addComponent(jTextFieldOtherPrice)
-                    .addComponent(jTextFieldOtherName)
-                    .addComponent(jTextFieldOtherSerialNumber)
-                    .addComponent(jTextFieldOtherID))
+                .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldOtherDescription, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                    .addComponent(jTextFieldOtherStock, javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jTextFieldOtherPrice, javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jTextFieldOtherName, javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jTextFieldOtherSerialNumber, javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jTextFieldOtherID, javax.swing.GroupLayout.Alignment.CENTER)
+                    .addGroup(jPanelOtherLayout.createSequentialGroup()
+                        .addComponent(jTextFieldOtherImageLocation)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonOtherBrowse)))
                 .addContainerGap())
         );
 
@@ -259,9 +290,10 @@ public class AddProductWindow extends Window {
                     .addComponent(jLabelOtherSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldOtherSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelOtherImageLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldOtherImageLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelOtherImageLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonOtherBrowse))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldOtherDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -269,7 +301,7 @@ public class AddProductWindow extends Window {
                 .addContainerGap())
         );
 
-        jPanelOtherLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextFieldOtherDescription, jTextFieldOtherID, jTextFieldOtherImageLocation, jTextFieldOtherName, jTextFieldOtherPrice, jTextFieldOtherSerialNumber, jTextFieldOtherStock});
+        jPanelOtherLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonOtherBrowse, jTextFieldOtherDescription, jTextFieldOtherID, jTextFieldOtherImageLocation, jTextFieldOtherName, jTextFieldOtherPrice, jTextFieldOtherSerialNumber, jTextFieldOtherStock});
 
         jPanelOtherLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelOtherDescription, jLabelOtherID, jLabelOtherImageLocation, jLabelOtherName, jLabelOtherPrice, jLabelOtherSerialNumber, jLabelOtherStock});
 
@@ -329,21 +361,15 @@ public class AddProductWindow extends Window {
             .addGroup(jPanelMainLayout.createSequentialGroup()
                 .addGroup(jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMainLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanelBottom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanelBottom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanelMainLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jLabelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
-            .addGroup(jPanelMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelTitle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jPanelMainLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabelTitle, jPanelBottom, jTabbedPane});
-
         jPanelMainLayout.setVerticalGroup(
             jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMainLayout.createSequentialGroup()
@@ -362,8 +388,7 @@ public class AddProductWindow extends Window {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -374,7 +399,6 @@ public class AddProductWindow extends Window {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    //DATABASE RELATED!!
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         // TODO add your handling code here:
         try {
@@ -411,7 +435,7 @@ public class AddProductWindow extends Window {
                     values.put("medicineStock", jTextFieldMedicineStock.getText());
                 }
                 if (!jTextFieldMedicineImageLocation.getText().isEmpty()) {
-                    values.put("medicineImageLocation", jTextFieldMedicineImageLocation.getText());
+                    values.put("medicineImageLocation", jTextFieldMedicineImageLocation.getText().replaceAll("\\\\", "\\\\\\\\"));
                 }
                 if (!jTextFieldMedicineDose.getText().isEmpty()) {
                     values.put("medicineDose", jTextFieldMedicineDose.getText());
@@ -436,7 +460,7 @@ public class AddProductWindow extends Window {
                     values.put("productStock", jTextFieldOtherStock.getText());
                 }
                 if (!jTextFieldOtherImageLocation.getText().isEmpty()) {
-                    values.put("productImageLocation", jTextFieldOtherImageLocation.getText());
+                    values.put("productImageLocation", jTextFieldOtherImageLocation.getText().replaceAll("\\\\", "\\\\\\\\"));
                 }
                 values.put("productSerialNumber", jTextFieldOtherSerialNumber.getText());
 
@@ -484,6 +508,36 @@ public class AddProductWindow extends Window {
         this.dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
+    private void jTextFieldMedicineImageLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMedicineImageLocationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldMedicineImageLocationActionPerformed
+
+    private void jButtonMedicineBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMedicineBrowseActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser("./");
+        FileFilter imageFilter = new FileNameExtensionFilter("Images only", ImageIO.getReaderFileSuffixes());
+        fc.setFileFilter(imageFilter);
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.setApproveButtonText("Choose");
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            jTextFieldMedicineImageLocation.setText(fc.getSelectedFile().getAbsolutePath());
+        }
+    }//GEN-LAST:event_jButtonMedicineBrowseActionPerformed
+
+    private void jButtonOtherBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOtherBrowseActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser("./");
+        FileFilter imageFilter = new FileNameExtensionFilter("Images only", ImageIO.getReaderFileSuffixes());
+        fc.setFileFilter(imageFilter);
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.setApproveButtonText("Choose");
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            jTextFieldOtherImageLocation.setText(fc.getSelectedFile().getAbsolutePath());
+        }
+    }//GEN-LAST:event_jButtonOtherBrowseActionPerformed
+
     //DATABASE RELATED!!
     public void insert(String insertQuery, Map<String, String> values, java.util.ArrayList<String> columns) throws SQLException {
         try {
@@ -508,6 +562,8 @@ public class AddProductWindow extends Window {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonCancel;
+    private javax.swing.JButton jButtonMedicineBrowse;
+    private javax.swing.JButton jButtonOtherBrowse;
     private javax.swing.JLabel jLabelMedicineActiveSub;
     private javax.swing.JLabel jLabelMedicineDose;
     private javax.swing.JLabel jLabelMedicineID;

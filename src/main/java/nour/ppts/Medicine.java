@@ -3,6 +3,7 @@ package nour.ppts;
 
 import java.util.ArrayList;
 import java.sql.*;
+import javax.swing.ImageIcon;
 
 public class Medicine extends Product {
 
@@ -58,6 +59,9 @@ public class Medicine extends Product {
             setImageLocation(rs.getString("medicineImageLocation"));
             setDose(rs.getDouble("medicineDose"));
             setActiveSub(rs.getString("medicineActiveSub"));
+            if (getImageLocation() != null) {
+                setImage(new ImageIcon(getImageLocation()));
+            }
         } catch (SQLException ex) {
             System.out.println("Error!\t" + ex.getMessage());
         }
@@ -66,7 +70,8 @@ public class Medicine extends Product {
     @Override
     protected void initializeIfNotInitialized() {
         if (getImageLocation() == null) {
-            setImageLocation("Undefined");
+            setImageLocation("./Icons/darkBlueQuestionMark.png");
+            setImage(new ImageIcon(this.getImageLocation()));
         }
         if (getLocation() == null) {
             setLocation("Undefined");

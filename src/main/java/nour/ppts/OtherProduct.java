@@ -5,6 +5,7 @@ package nour.ppts;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 public class OtherProduct extends Product {
 
@@ -39,6 +40,10 @@ public class OtherProduct extends Product {
             setSerialNumber(st.getInt("productSerialNumber"));
             setImageLocation(st.getString("productImageLocation"));
             setDescription(st.getString("productDescription"));
+            if (getImageLocation() != null) {
+                setImage(new ImageIcon(getImageLocation()));
+            }
+
         } catch (SQLException ex) {
             System.out.println("Error!\t" + ex.getMessage());
         }
@@ -50,7 +55,8 @@ public class OtherProduct extends Product {
             setDescription("Undefined");
         }
         if (getImageLocation() == null) {
-            setImageLocation("Undefined");
+            setImageLocation("./Icons/darkBlueQuestionMark.png");
+            setImage(new ImageIcon(this.getImageLocation()));
         }
     }
 

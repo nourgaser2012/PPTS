@@ -25,7 +25,6 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanelMain" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -48,21 +47,18 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="jPanelBottom" linkSize="12" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                          <Component id="jPanelBottom" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTabbedPane" linkSize="12" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jTabbedPane" pref="0" max="32767" attributes="0"/>
+                              <Component id="jLabelTitle" alignment="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabelTitle" linkSize="12" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -138,19 +134,28 @@
                                   <Component id="jLabelMedicineActiveSub" min="-2" pref="101" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="2" attributes="0">
-                              <Component id="jTextFieldMedicineImageLocation" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
-                              <Component id="jTextFieldMedicineDose" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
-                              <Component id="jTextFieldMedicineStock" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
-                              <Component id="jTextFieldMedicinePrice" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
-                              <Component id="jTextFieldMedicineName" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
-                              <Component id="jTextFieldMedicineSerialNumber" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
-                              <Component id="jTextFieldMedicineID" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
-                              <Component id="jTextFieldMedicineActiveSub" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
-                              <Component id="jTextFieldMedicineLocation" linkSize="10" alignment="2" min="-2" pref="270" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="2" attributes="0">
+                                      <Component id="jTextFieldMedicineDose" alignment="2" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldMedicineStock" alignment="2" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldMedicinePrice" alignment="2" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldMedicineName" alignment="2" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldMedicineSerialNumber" alignment="2" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldMedicineID" alignment="2" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldMedicineActiveSub" alignment="2" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldMedicineLocation" alignment="2" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jTextFieldMedicineImageLocation" pref="184" max="32767" attributes="0"/>
+                                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonMedicineBrowse" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -183,9 +188,10 @@
                               <Component id="jTextFieldMedicineSerialNumber" linkSize="1" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="2" attributes="0">
-                              <Component id="jTextFieldMedicineImageLocation" linkSize="1" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="jLabelMedicineImageLocation" linkSize="2" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabelMedicineImageLocation" linkSize="2" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="jTextFieldMedicineImageLocation" linkSize="1" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="jButtonMedicineBrowse" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="2" attributes="0">
@@ -238,6 +244,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextFieldMedicineImageLocation">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldMedicineImageLocationActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabelMedicineStock">
                   <Properties>
@@ -271,6 +280,14 @@
                     <Property name="text" type="java.lang.String" value="Location"/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JButton" name="jButtonMedicineBrowse">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Browse"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonMedicineBrowseActionPerformed"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanelOther">
@@ -297,14 +314,18 @@
                               <Component id="jLabelOtherDescription" linkSize="8" alignment="0" min="-2" pref="74" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="2" attributes="0">
-                              <Component id="jTextFieldOtherImageLocation" alignment="2" pref="307" max="32767" attributes="0"/>
-                              <Component id="jTextFieldOtherDescription" alignment="2" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jTextFieldOtherDescription" alignment="2" pref="307" max="32767" attributes="0"/>
                               <Component id="jTextFieldOtherStock" alignment="2" max="32767" attributes="0"/>
                               <Component id="jTextFieldOtherPrice" alignment="2" max="32767" attributes="0"/>
                               <Component id="jTextFieldOtherName" alignment="2" max="32767" attributes="0"/>
                               <Component id="jTextFieldOtherSerialNumber" alignment="2" max="32767" attributes="0"/>
                               <Component id="jTextFieldOtherID" alignment="2" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jTextFieldOtherImageLocation" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButtonOtherBrowse" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -339,9 +360,10 @@
                               <Component id="jTextFieldOtherSerialNumber" linkSize="7" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="2" attributes="0">
-                              <Component id="jTextFieldOtherImageLocation" linkSize="7" alignment="2" min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="jLabelOtherImageLocation" linkSize="11" alignment="2" min="-2" pref="37" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabelOtherImageLocation" linkSize="11" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="jTextFieldOtherImageLocation" linkSize="7" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="jButtonOtherBrowse" linkSize="7" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="2" attributes="0">
@@ -402,6 +424,14 @@
                 <Component class="javax.swing.JTextField" name="jTextFieldOtherPrice">
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextFieldOtherDescription">
+                </Component>
+                <Component class="javax.swing.JButton" name="jButtonOtherBrowse">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Browse"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonOtherBrowseActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

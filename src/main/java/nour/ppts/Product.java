@@ -5,12 +5,13 @@ package nour.ppts;
 
 import java.awt.Image;
 import java.sql.*;
+import javax.swing.Icon;
 
 public abstract class Product {
 
     private int id, stock, serialNumber;
     private double price;
-    private Image image;
+    private Icon image;
     private String imageLocation;        //used to store the image's location on the server
     private String name;
     
@@ -30,7 +31,7 @@ public abstract class Product {
         return price;
     }
 
-    public Image getImage() {
+    public Icon getImage() {
         return image;
     }
 
@@ -50,7 +51,7 @@ public abstract class Product {
         this.name = name;
     }
 
-    public void setImage(Image image) {
+    public void setImage(Icon image) {
         this.image = image;
     }
 
@@ -68,10 +69,6 @@ public abstract class Product {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public void setProductImage(Image productImage) {
-        this.image = productImage;
     }
 
     public abstract void setData(ResultSet rs, int index); //DATABASE RELATED! Set the product's all data using a 

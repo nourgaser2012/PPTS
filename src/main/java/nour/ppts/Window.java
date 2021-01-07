@@ -45,7 +45,7 @@ public abstract class Window extends javax.swing.JFrame {
         System.out.println("Creating new window...");
         setTheme("Nimbus");
         setSize(750, 450);
-        setResizable(false);
+//        setResizable(false);
 //        java.awt.Dimension d = new java.awt.Dimension(600, 350);
 //        setMinimumSize(d);
         setPreferredSize(getSize());
