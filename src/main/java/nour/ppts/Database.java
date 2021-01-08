@@ -8,14 +8,9 @@ import java.util.ArrayList;
 
 public final class Database {
 
-    //free online server on SmarterASP.net
-//    private static String username = "a6cc0b_ppts";
-//    private static String password = "ppts1234";
-//    private static final String URL = "jdbc:mysql://mysql5044.site4now.net/db_a6cc0b_ppts";
-    //for local server only
-    private static String username;// = "root";
-    private static String password;// = "1234";
-    private static String url; //= "jdbc:mysql://localhost:3306/ppts";
+    private static String username;
+    private static String password;
+    private static String url;
 
     private static final String[] localServer = {"root", "1234", "jdbc:mysql://localhost:3306/ppts"};
     private static final String[] smarterASPServer = {"a6cc0b_ppts", "ppts1234", "jdbc:mysql://mysql5044.site4now.net/db_a6cc0b_ppts"};
@@ -23,7 +18,7 @@ public final class Database {
 
     public static String dateFormat = "yyyy-MM-dd hh:mm a";
 
-    private static void selectServer(String[] server) {
+    public static void selectServer(String[] server) {
         username = server[0];
         password = server[1];
         url = server[2];
@@ -53,7 +48,13 @@ public final class Database {
 
     static void remove(String tableName, int id) throws SQLException {
         Connection conn = DriverManager.getConnection(url, username, password);
-        PreparedStatement st = conn.prepareStatement("DELETE FROM " + tableName + " WHERE " + tableName + "ID = " + id + ";");
+        PreparedStatement st;
+        if (tableName == "receipts") {
+            st = conn.prepareStatement("DELETE FROM " + tableName + " WHERE " + "receiptID = " + id + ";");
+            Database.refreshReceiptsArrayList();
+        } else {
+            st = conn.prepareStatement("DELETE FROM " + tableName + " WHERE " + tableName + "ID = " + id + ";");
+        }
         st.executeUpdate();
         st.close();
         Database.refreshMedicinesArrayList();
@@ -99,8 +100,6 @@ public final class Database {
     //refrshes the ArrayList from the database: 
     //clears the ArrayList then inserts into it all entries from its respective table from the database
     static void refreshMedicinesArrayList() throws SQLException {
-        System.out.println("Populating arrays now...");
-        //clearing the array
         Medicine.allMedicines = new ArrayList<>();
 
         //ResultSets with all enteries from the database
@@ -128,38 +127,15 @@ public final class Database {
 
     }
 
-//    static void refreshRecieptsArrayList() throws SQLException {
-//        Reciepts.allReciepts = new ArrayList<>();
-//        ResultSet rs = Database.select("SELECT * FROM reciept");
-//        int rsSize = Database.getResultSetSize(rs);
-//        for (int i = 0; i < rsSize; i++) {
-//            Reciept.allReciepts.add(new Reciept(rs, i + 1));
-//        }
-//        rs.close();
-//        System.out.println("Reciepts ArrayList refrshed successfully...");
-//    }
-    public static String getUsername() {
-        return username;
-    }
-
-    public static void setUsername(String username) {
-        Database.username = username;
-    }
-
-    public static String getPassword() {
-        return password;
-    }
-
-    public static void setPassword(String password) {
-        Database.password = password;
-    }
-
-    public static String getUrl() {
-        return url;
-    }
-
-    public static void setUrl(String url) {
-        Database.url = url;
+    static void refreshReceiptsArrayList() throws SQLException {
+        Receipt.allReceipts = new ArrayList<>();
+        ResultSet rs = Database.select("SELECT * FROM receipts");
+        int rsSize = Database.getResultSetSize(rs);
+        for (int i = 0; i < rsSize; i++) {
+            Receipt.allReceipts.add(new Receipt(rs, i + 1));
+        }
+        rs.close();
+        System.out.println("Receipts ArrayList refrshed successfully...");
     }
 
     public static String getCurrentDateString() throws ParseException {

@@ -4,17 +4,8 @@ import javax.swing.Icon;
 
 public abstract class Window extends javax.swing.JFrame {
 
-//    static {
-//        System.out.println("class Window loading block called...");
-//        try {
-//        Database.refreshMedicinesArrayList();
-//        Database.refreshOtherProductsArrayList();
-//        }
-//        catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-
+    public static final String backIconLocation = "./Icons/back_64px.png";
+    
     public final void setTheme(String themeName) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -44,7 +35,7 @@ public abstract class Window extends javax.swing.JFrame {
     Window() {
         System.out.println("Creating new window...");
         setTheme("Nimbus");
-        setSize(750, 450);
+        setSize(750, 460);
 //        setResizable(false);
 //        java.awt.Dimension d = new java.awt.Dimension(600, 350);
 //        setMinimumSize(d);

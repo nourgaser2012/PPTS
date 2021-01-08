@@ -280,9 +280,6 @@
                   <Font name="Segoe UI" size="18" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="E:\Code\Java Practice\PPTS\Icons\paid_bill_64px.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Generate New Reciept"/>
               </Properties>
             </Component>
@@ -369,6 +366,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Generate"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGenerateActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

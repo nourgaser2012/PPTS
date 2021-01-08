@@ -4,9 +4,10 @@ package nour.ppts;
 import java.util.ArrayList;
 import java.awt.event.*;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
 import javax.swing.table.DefaultTableModel;
 
 public class ProductsWindow extends Window {
@@ -265,7 +266,47 @@ public class ProductsWindow extends Window {
 
     private void jButtonPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrintActionPerformed
         // TODO add your handling code here:
-        PrintProductsListWindow w = new PrintProductsListWindow(this);
+        switch (jTabbedPane.getSelectedIndex()) {
+            case 0 -> {
+                if (jTableMedicine.getSelectedRowCount() == 1) {
+                    int id = Integer.parseInt(medicineTableModel.getValueAt(jTableMedicine.getSelectedRow(), 0).toString());
+                    for (var medicine : Medicine.allMedicines) {
+                        if (medicine.getId() == id) {
+                            PrintWindow w = new PrintWindow(this, medicine);
+                            break;
+                        }
+                    }
+                } else if (jTableMedicine.getSelectedRowCount() > 1) {
+                    DefaultTableModel newModel = initTableModel(medicineColumns);
+                    int indexes[] = jTableMedicine.getSelectedRows();
+                    for (int index : indexes) {
+                        newModel.addRow(medicineTableModel.getDataVector().get(index));
+                    }
+                    JTable newTable = new JTable(newModel);
+                    PrintWindow w = new PrintWindow(this, newTable);
+                } else;
+            }
+            case 1 -> {
+                if (jTableOther.getSelectedRowCount() == 1) {
+                    int id = Integer.parseInt(otherTableModel.getValueAt(jTableOther.getSelectedRow(), 0).toString());
+                    for (var product : OtherProduct.allOtherProducts) {
+                        if (product.getId() == id) {
+                            PrintWindow w = new PrintWindow(this, product);
+                            break;
+                        }
+                    }
+                } else if (jTableOther.getSelectedRowCount() > 1) {
+                    DefaultTableModel newModel = initTableModel(otherColumns);
+                    int indexes[] = jTableOther.getSelectedRows();
+                    for (int index : indexes) {
+                        newModel.addRow(otherTableModel.getDataVector().get(index));
+                    }
+                    JTable newTable = new JTable(newModel);
+                    PrintWindow w = new PrintWindow(this, newTable);
+                } else;
+            }
+            default -> JOptionPane.showMessageDialog(this, "No tab selected.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonPrintActionPerformed
 
     private void jTextFieldSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSearchActionPerformed
@@ -283,8 +324,7 @@ public class ProductsWindow extends Window {
             } else {
                 jTableMedicine.setModel(medicineTableModel);
             }
-        }
-        else {
+        } else {
             if (!jTextFieldSearch.getText().isEmpty()) {
                 DefaultTableModel newModel = initTableModel(otherColumns);
                 for (var v : otherTableModel.getDataVector()) {

@@ -36,7 +36,8 @@ public class UpdateMedicineWindow extends Window {
         initComponents();
         setTextFields();
         jLabelImage.setIcon(medicine.getImage());
-        setSize(getPreferredSize().width + 50, getPreferredSize().height + 300);
+        jLabelBackButton.setIcon(new ImageIcon(Window.backIconLocation));
+        setSize(getPreferredSize().width + 50, getPreferredSize().height + 200);
         setLocationRelativeTo(null);
     }
 
@@ -92,7 +93,6 @@ public class UpdateMedicineWindow extends Window {
         });
 
         jLabelBackButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelBackButton.setIcon(new javax.swing.ImageIcon("E:\\Code\\Java Practice\\PPTS\\src\\main\\java\\nour\\Icons\\back_64px.png")); // NOI18N
         jLabelBackButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelBackButtonMouseClicked(evt);

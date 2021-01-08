@@ -3,11 +3,13 @@ package nour.ppts;
 
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class MainWindow extends Window {
 
     Boolean connectedToDb;
+    private static final String[] iconLocations = {"./Icons/hand_with_a_pill_64px.png", "./Icons/pill_64px.png", "./Icons/receipt_64px.png"};
 
     public MainWindow() {
         connectedToDb = false;
@@ -20,8 +22,10 @@ public class MainWindow extends Window {
         }
         comboBoxModel = new DefaultComboBoxModel(serverAddresses);
         jComboBoxServer.setModel(comboBoxModel);
-        
-//        jButtonConnectActionPerformed(null);
+
+        jLabelTitle.setIcon(new ImageIcon(iconLocations[0]));
+        jLabelButtonProducts.setIcon(new ImageIcon(iconLocations[1]));
+        jLabelButtonReceipts.setIcon(new ImageIcon(iconLocations[2]));
     }
 
     @SuppressWarnings("unchecked")
@@ -29,7 +33,6 @@ public class MainWindow extends Window {
     private void initComponents() {
 
         jPanelMain = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jPanelServerForm = new javax.swing.JPanel();
         jTextFieldUsername = new javax.swing.JTextField();
         jLabelUsername = new javax.swing.JLabel();
@@ -39,9 +42,11 @@ public class MainWindow extends Window {
         jPasswordField = new javax.swing.JPasswordField();
         jPanelButtons = new javax.swing.JPanel();
         jPanelRecieptsButton = new javax.swing.JPanel();
-        jLabelButtonReciepts = new javax.swing.JLabel();
+        jLabelButtonReceipts = new javax.swing.JLabel();
         jPanelProductsButton = new javax.swing.JPanel();
         jLabelButtonProducts = new javax.swing.JLabel();
+        jPanelTitle = new javax.swing.JPanel();
+        jLabelTitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,13 +54,6 @@ public class MainWindow extends Window {
         jPanelMain.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         jPanelMain.setAlignmentY(java.awt.Component.CENTER_ALIGNMENT);
         jPanelMain.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-
-        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon("E:\\Code\\Java Practice\\PPTS\\Icons\\hand_with_a_pill_64px.png")); // NOI18N
-        jLabel1.setText("Pharmacy Product Tracking System (PPTS)");
 
         jPanelServerForm.setBackground(new java.awt.Color(222, 222, 222));
 
@@ -108,11 +106,11 @@ public class MainWindow extends Window {
                     .addGroup(jPanelServerFormLayout.createSequentialGroup()
                         .addComponent(jLabelUsername)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldUsername)
+                        .addComponent(jTextFieldUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPasswordField))
+                        .addComponent(jPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelServerFormLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -144,21 +142,20 @@ public class MainWindow extends Window {
         jPanelRecieptsButton.setBackground(new java.awt.Color(255, 255, 255));
         jPanelRecieptsButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
 
-        jLabelButtonReciepts.setBackground(new java.awt.Color(255, 255, 255));
-        jLabelButtonReciepts.setFont(jLabelButtonReciepts.getFont().deriveFont(jLabelButtonReciepts.getFont().getStyle() | java.awt.Font.BOLD, jLabelButtonReciepts.getFont().getSize()+6));
-        jLabelButtonReciepts.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelButtonReciepts.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelButtonReciepts.setIcon(new javax.swing.ImageIcon("E:\\Code\\Java Practice\\PPTS\\Icons\\receipt_64px.png")); // NOI18N
-        jLabelButtonReciepts.setText("Generate Reciept");
-        jLabelButtonReciepts.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabelButtonReceipts.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelButtonReceipts.setFont(jLabelButtonReceipts.getFont().deriveFont(jLabelButtonReceipts.getFont().getStyle() | java.awt.Font.BOLD, jLabelButtonReceipts.getFont().getSize()+6));
+        jLabelButtonReceipts.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelButtonReceipts.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelButtonReceipts.setText("Generate Reciept");
+        jLabelButtonReceipts.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelButtonRecieptsMouseClicked(evt);
+                jLabelButtonReceiptsMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabelButtonRecieptsMouseEntered(evt);
+                jLabelButtonReceiptsMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabelButtonRecieptsMouseExited(evt);
+                jLabelButtonReceiptsMouseExited(evt);
             }
         });
 
@@ -168,14 +165,14 @@ public class MainWindow extends Window {
             jPanelRecieptsButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRecieptsButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelButtonReciepts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelButtonReceipts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelRecieptsButtonLayout.setVerticalGroup(
             jPanelRecieptsButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRecieptsButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelButtonReciepts, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelButtonReceipts, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
@@ -186,7 +183,6 @@ public class MainWindow extends Window {
         jLabelButtonProducts.setFont(jLabelButtonProducts.getFont().deriveFont(jLabelButtonProducts.getFont().getStyle() | java.awt.Font.BOLD, jLabelButtonProducts.getFont().getSize()+6));
         jLabelButtonProducts.setForeground(new java.awt.Color(0, 0, 0));
         jLabelButtonProducts.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelButtonProducts.setIcon(new javax.swing.ImageIcon("E:\\Code\\Java Practice\\PPTS\\Icons\\pill_64px.png")); // NOI18N
         jLabelButtonProducts.setText("View/Update Products");
         jLabelButtonProducts.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -206,7 +202,7 @@ public class MainWindow extends Window {
             jPanelProductsButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelProductsButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelButtonProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelButtonProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelProductsButtonLayout.setVerticalGroup(
@@ -232,13 +228,36 @@ public class MainWindow extends Window {
             jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelButtonsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelProductsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelProductsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelRecieptsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelRecieptsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanelButtonsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jPanelProductsButton, jPanelRecieptsButton});
+        jPanelTitle.setBackground(new java.awt.Color(222, 222, 222));
+
+        jLabelTitle.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelTitle.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
+        jLabelTitle.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTitle.setText("Pharmacy Product Tracking System (PPTS)");
+
+        javax.swing.GroupLayout jPanelTitleLayout = new javax.swing.GroupLayout(jPanelTitle);
+        jPanelTitle.setLayout(jPanelTitleLayout);
+        jPanelTitleLayout.setHorizontalGroup(
+            jPanelTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTitleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanelTitleLayout.setVerticalGroup(
+            jPanelTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTitleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanelMainLayout = new javax.swing.GroupLayout(jPanelMain);
         jPanelMain.setLayout(jPanelMainLayout);
@@ -247,20 +266,20 @@ public class MainWindow extends Window {
             .addGroup(jPanelMainLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE)
                     .addComponent(jPanelServerForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelMainLayout.setVerticalGroup(
             jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMainLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanelServerForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -301,28 +320,28 @@ public class MainWindow extends Window {
         ));
     }//GEN-LAST:event_jLabelButtonProductsMouseExited
 
-    private void jLabelButtonRecieptsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelButtonRecieptsMouseClicked
+    private void jLabelButtonReceiptsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelButtonReceiptsMouseClicked
         // TODO add your handling code here:
         if (connectedToDb == true) {
-            RecieptsWindow w = new RecieptsWindow(this);
+            ReceiptsWindow w = new ReceiptsWindow(this);
         } else {
             JOptionPane.showMessageDialog(this, "Please connect to a database first.", "Not Connected", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jLabelButtonRecieptsMouseClicked
+    }//GEN-LAST:event_jLabelButtonReceiptsMouseClicked
 
-    private void jLabelButtonRecieptsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelButtonRecieptsMouseEntered
+    private void jLabelButtonReceiptsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelButtonReceiptsMouseEntered
         // TODO add your handling code here:
-        Font f = jLabelButtonReciepts.getFont();
-        jLabelButtonReciepts.setFont(new Font(f.getName(), f.getStyle(), f.getSize() + 3
+        Font f = jLabelButtonReceipts.getFont();
+        jLabelButtonReceipts.setFont(new Font(f.getName(), f.getStyle(), f.getSize() + 3
         ));
-    }//GEN-LAST:event_jLabelButtonRecieptsMouseEntered
+    }//GEN-LAST:event_jLabelButtonReceiptsMouseEntered
 
-    private void jLabelButtonRecieptsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelButtonRecieptsMouseExited
+    private void jLabelButtonReceiptsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelButtonReceiptsMouseExited
         // TODO add your handling code here:
-        Font f = jLabelButtonReciepts.getFont();
-        jLabelButtonReciepts.setFont(new Font(f.getName(), f.getStyle(), f.getSize() - 3
+        Font f = jLabelButtonReceipts.getFont();
+        jLabelButtonReceipts.setFont(new Font(f.getName(), f.getStyle(), f.getSize() - 3
         ));
-    }//GEN-LAST:event_jLabelButtonRecieptsMouseExited
+    }//GEN-LAST:event_jLabelButtonReceiptsMouseExited
 
     private void jTextFieldUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsernameActionPerformed
         // TODO add your handling code here:
@@ -335,13 +354,11 @@ public class MainWindow extends Window {
             for (String[] server : Database.servers) {
                 if (server[2].contains(selectedServerAddress)) {
                     if ((server[0].equals(jTextFieldUsername.getText())) && (server[1].equals(String.valueOf(jPasswordField.getPassword())))) {
-                        Database.setUsername(server[0]);
-                        Database.setPassword(server[1]);
-                        Database.setUrl(server[2]);
+                        Database.selectServer(server);
                         try {
                             Database.refreshMedicinesArrayList();
                             Database.refreshOtherProductsArrayList();
-//                        Database.refreshRecieptsProductsArrayList();
+                            Database.refreshReceiptsArrayList();
                             JOptionPane.showMessageDialog(this, "Connected to " + server[2] + " successfully.");
                             connectedToDb = true;
                         } catch (java.sql.SQLException e) {
@@ -362,16 +379,17 @@ public class MainWindow extends Window {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonConnect;
     private javax.swing.JComboBox<String> jComboBoxServer;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelButtonProducts;
-    private javax.swing.JLabel jLabelButtonReciepts;
+    private javax.swing.JLabel jLabelButtonReceipts;
     private javax.swing.JLabel jLabelPassword;
+    private javax.swing.JLabel jLabelTitle;
     private javax.swing.JLabel jLabelUsername;
     private javax.swing.JPanel jPanelButtons;
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JPanel jPanelProductsButton;
     private javax.swing.JPanel jPanelRecieptsButton;
     private javax.swing.JPanel jPanelServerForm;
+    private javax.swing.JPanel jPanelTitle;
     private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JTextField jTextFieldUsername;
     // End of variables declaration//GEN-END:variables

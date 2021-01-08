@@ -1,10 +1,9 @@
-//ELAATTAR'S TASK
 package nour.ppts;
 
 public interface Printable {
-    void print();
+    void printOne(Medicine medicine);
+    void printOne(OtherProduct product);
+    void printOne(Receipt receipt);
+    
+    void printTable(javax.swing.JTable table);
 }
-
-//ELAATTAR'S TASK
-
-//this interface should include all the methods needed in the "PrintXWindow"  

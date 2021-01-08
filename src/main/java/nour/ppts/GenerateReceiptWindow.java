@@ -1,23 +1,26 @@
-//OMAR'S TASK
 package nour.ppts;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.ImageIcon;
+import static nour.ppts.Database.dateFormat;
 
-public class GenerateRecieptWindow extends Window {
+public class GenerateReceiptWindow extends Window {
 
-    RecieptsWindow parent;
-    DefaultTableModel tableModel;
-    ArrayList<Reciept> reciepts;
+    private ReceiptsWindow parent;
+    private static final String windowIconLocation = "./Icons/paid_bill_64px.png";
 
-    public GenerateRecieptWindow(RecieptsWindow parent) {
+    public GenerateReceiptWindow(ReceiptsWindow parent) {
         this.parent = parent;
 
         //freezing parent until productsWindow is closed
@@ -35,17 +38,16 @@ public class GenerateRecieptWindow extends Window {
                 new String[]{"Type", "Name", "Quantity", "Total"}
         );
 
-        reciepts = new ArrayList<>();
-
         initComponents();
-        
+
         //setting date chooser date to system date
         try {
             jDateChooser.setDate(Database.getCurrentDate());
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Current Date Error", JOptionPane.ERROR_MESSAGE);
         }
-
+        
+        jLabelTitle.setIcon(new ImageIcon(windowIconLocation));
         this.setSize(460, 480);
         this.setLocationRelativeTo(null);
     }
@@ -198,7 +200,6 @@ public class GenerateRecieptWindow extends Window {
 
         jLabelTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTitle.setIcon(new javax.swing.ImageIcon("E:\\Code\\Java Practice\\PPTS\\Icons\\paid_bill_64px.png")); // NOI18N
         jLabelTitle.setText("Generate New Reciept");
 
         javax.swing.GroupLayout jPanelTitleLayout = new javax.swing.GroupLayout(jPanelTitle);
@@ -252,6 +253,11 @@ public class GenerateRecieptWindow extends Window {
         });
 
         jButtonGenerate.setText("Generate");
+        jButtonGenerate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGenerateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelCancelLayout = new javax.swing.GroupLayout(jPanelCancel);
         jPanelCancel.setLayout(jPanelCancelLayout);
@@ -342,7 +348,7 @@ public class GenerateRecieptWindow extends Window {
         Object[] obj = {"Product ID/Serial Number", id, "Product Quantity", quantity, type};
 
         ImageIcon icon = new ImageIcon(".\\Icons\\receipt_64px.png");
-        javax.swing.JOptionPane.showMessageDialog(this, obj, "Add Product to Reciept", JOptionPane.DEFAULT_OPTION, icon);
+        javax.swing.JOptionPane.showMessageDialog(this, obj, "Add Product to Receipt", JOptionPane.DEFAULT_OPTION, icon);
         if (id.getText().isEmpty() || quantity.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter both the ID and the quantity.", "Empty ID or Quantity", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -372,7 +378,7 @@ public class GenerateRecieptWindow extends Window {
                             }
 
                             tableModel.addRow(data);
-                            jTextFieldNumberOfItems.setText(String.valueOf(Integer.parseInt(jTextFieldNumberOfItems.getText() + 1)));
+                            jTextFieldNumberOfItems.setText(String.valueOf(Integer.parseInt(String.valueOf((Integer.parseInt(jTextFieldNumberOfItems.getText()) + 1)))));
                             Double total = 0.0;
                             for (var v : tableModel.getDataVector()) {
                                 total += Double.parseDouble(v.get(3).toString());
@@ -439,6 +445,104 @@ public class GenerateRecieptWindow extends Window {
         this.dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
+    private void jButtonGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerateActionPerformed
+        // TODO add your handling code here:
+        try {
+            //making sure that date and items tables aren't empty
+            if (jTextFieldID.getText().isEmpty()) {
+                throw new Exception("ID Cannot be empty.");
+            }
+            try {
+                Integer.parseInt(jTextFieldID.getText());
+            } catch (NumberFormatException e) {
+                throw new Exception("ID must be an integer.");
+            }
+            if (jDateChooser.getDate().toString().isEmpty() || jDateChooser.getDate() == null) {
+                try {
+                    jDateChooser.setDate(Database.getCurrentDate());
+                } catch (ParseException ex) {
+                    JOptionPane.showMessageDialog(this, "Please enter the data correctly.\n" + ex.getMessage(), "Current Date Error", JOptionPane.ERROR_MESSAGE);
+                }
+                throw new Exception("Must add the date using the provided format.");
+            }
+            if (jTableProductsTable.getRowCount() == 0) {
+                throw new Exception("Must add at least one product to the receipt.");
+            }
+
+            //will store the data from the textfields
+            Map<String, String> values = new HashMap<>();
+
+            values.put("tableName", "receipts");
+            values.put("receiptID", String.valueOf(jTextFieldID.getText()));
+            values.put("receiptNumberOfItems", jTextFieldNumberOfItems.getText());
+            values.put("receiptTotal", jTextFieldTotal.getText());
+
+            SimpleDateFormat simpleDateFormatter = new SimpleDateFormat(dateFormat);
+            values.put("receiptDate", simpleDateFormatter.format(jDateChooser.getDate()));
+            System.out.println(simpleDateFormatter.format(jDateChooser.getDate()));
+
+            String items = "";
+            for (int i = 0; i < jTableProductsTable.getRowCount(); i++) {
+                items += String.valueOf(Integer.parseInt(tableModel.getDataVector().get(i).elementAt(2).toString()));
+                items += "x";
+                items += tableModel.getDataVector().get(i).elementAt(1).toString();
+                items += ", ";
+            }
+            items = items.substring(0, items.length() - 2);
+            values.put("receiptItems", items);
+
+            if (!jTextFieldCustomerName.getText().isEmpty()) {
+                values.put("receiptCustomerName", jTextFieldCustomerName.getText());
+            }
+
+            //columns string indicates which columns to send to the database (only sending non-empty values)
+            String columns = "( ";
+            java.util.ArrayList<String> columnsArr = new java.util.ArrayList<>();
+            for (String k : values.keySet()) {
+                if ("tableName".equals(k)) {
+                    continue;
+                }
+                columns += k + ", ";
+                columnsArr.add(k);
+            }
+            columns = columns.substring(0, columns.length() - 2);
+            columns += ") ";
+
+            //SQL query that will be excuted being sent to insert method from Database clase
+            try {
+                insert("INSERT INTO " + values.get("tableName") + columns + "VALUES(", values, columnsArr);
+            }
+            catch (SQLException e) {
+                throw e;
+            }
+            Database.refreshReceiptsArrayList();
+            parent.refreshTable();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonGenerateActionPerformed
+
+    public void insert(String insertQuery, Map<String, String> values, java.util.ArrayList<String> columns) throws SQLException {
+        for (String k : columns) {
+            try {
+                Double.parseDouble(values.get(k));
+                insertQuery += values.get(k) + ", ";
+            } catch (NumberFormatException e) {
+                insertQuery += "'" + values.get(k) + "', ";
+            }
+            finally {
+                System.out.println(values.get(k));
+            }
+        }
+        insertQuery = insertQuery.substring(0, insertQuery.length() - 2);
+        insertQuery += ");";
+        System.out.println(insertQuery);
+        
+        Database.insert(insertQuery);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
@@ -465,6 +569,6 @@ public class GenerateRecieptWindow extends Window {
     private javax.swing.JTextField jTextFieldNumberOfItems;
     private javax.swing.JTextField jTextFieldTotal;
     // End of variables declaration//GEN-END:variables
-}
+    DefaultTableModel tableModel;
 
-//OMAR'S TASK
+}

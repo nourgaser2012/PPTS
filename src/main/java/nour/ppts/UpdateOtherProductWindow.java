@@ -36,7 +36,8 @@ public class UpdateOtherProductWindow extends Window {
         initComponents();
         setTextFields();
         jLabelImage.setIcon(product.getImage());
-        setSize(getPreferredSize().width + 50, getPreferredSize().height + 200);
+        jLabelBackButton.setIcon(new ImageIcon(Window.backIconLocation));
+        setSize(getPreferredSize().width + 50, getPreferredSize().height + 150);
         setLocationRelativeTo(null);
     }
 
@@ -88,7 +89,6 @@ public class UpdateOtherProductWindow extends Window {
         });
 
         jLabelBackButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelBackButton.setIcon(new javax.swing.ImageIcon("E:\\Code\\Java Practice\\PPTS\\src\\main\\java\\nour\\Icons\\back_64px.png")); // NOI18N
         jLabelBackButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelBackButtonMouseClicked(evt);

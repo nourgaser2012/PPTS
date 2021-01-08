@@ -1,4 +1,3 @@
-//used to add a new product to the database
 package nour.ppts;
 
 import java.awt.event.WindowAdapter;
@@ -81,7 +80,6 @@ public class AddProductWindow extends Window {
         jPanelBottom = new javax.swing.JPanel();
         jButtonAdd = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
-        jLabelStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -157,7 +155,7 @@ public class AddProductWindow extends Window {
                             .addComponent(jTextFieldMedicineLocation))
                         .addGap(10, 10, 10))
                     .addGroup(jPanelMedicineLayout.createSequentialGroup()
-                        .addComponent(jTextFieldMedicineImageLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                        .addComponent(jTextFieldMedicineImageLocation)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonMedicineBrowse)
                         .addGap(12, 12, 12))))
@@ -251,7 +249,7 @@ public class AddProductWindow extends Window {
                     .addComponent(jLabelOtherDescription, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldOtherDescription, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                    .addComponent(jTextFieldOtherDescription, javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldOtherStock, javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldOtherPrice, javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextFieldOtherName, javax.swing.GroupLayout.Alignment.CENTER)
@@ -323,23 +321,19 @@ public class AddProductWindow extends Window {
             }
         });
 
-        jLabelStatus.setText("Error Message");
-
         javax.swing.GroupLayout jPanelBottomLayout = new javax.swing.GroupLayout(jPanelBottom);
         jPanelBottom.setLayout(jPanelBottomLayout);
         jPanelBottomLayout.setHorizontalGroup(
             jPanelBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBottomLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBottomLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonAdd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonCancel)
                 .addContainerGap())
         );
 
-        jPanelBottomLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonAdd, jButtonCancel, jLabelStatus});
+        jPanelBottomLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonAdd, jButtonCancel});
 
         jPanelBottomLayout.setVerticalGroup(
             jPanelBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,12 +341,11 @@ public class AddProductWindow extends Window {
                 .addContainerGap()
                 .addGroup(jPanelBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAdd)
-                    .addComponent(jButtonCancel)
-                    .addComponent(jLabelStatus))
+                    .addComponent(jButtonCancel))
                 .addContainerGap())
         );
 
-        jPanelBottomLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonAdd, jButtonCancel, jLabelStatus});
+        jPanelBottomLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonAdd, jButtonCancel});
 
         javax.swing.GroupLayout jPanelMainLayout = new javax.swing.GroupLayout(jPanelMain);
         jPanelMain.setLayout(jPanelMainLayout);
@@ -366,7 +359,7 @@ public class AddProductWindow extends Window {
                     .addGroup(jPanelMainLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
                             .addComponent(jLabelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -419,8 +412,8 @@ public class AddProductWindow extends Window {
             //will store all data entered in the textfields
             Map<String, String> values = new HashMap<>();
 
-            //checking which panel is selected (entering into Medicine or OtherProduct)
             if (jTabbedPane.getSelectedComponent().equals(jPanelMedicine)) {
+                //  <editor-fold defaultstate="collapsed" desc="If adding medicine">
 
                 values.put("tableName", "medicine");
                 values.put("medicineID", String.valueOf(jTextFieldMedicineID.getText()));
@@ -443,9 +436,11 @@ public class AddProductWindow extends Window {
                 values.put("medicineSerialNumber", jTextFieldMedicineSerialNumber.getText());
                 if (!jTextFieldMedicineLocation.getText().isEmpty()) {
                     values.put("medicineLocation", jTextFieldMedicineLocation.getText());
+                    //</editor-fold>
                 }
 
             } else if (jTabbedPane.getSelectedComponent().equals(jPanelOther)) {
+                //  <editor-fold defaultstate="collapsed" desc="If adding other">
 
                 values.put("tableName", "product");
                 values.put("productID", String.valueOf(jTextFieldOtherID.getText()));
@@ -463,9 +458,9 @@ public class AddProductWindow extends Window {
                     values.put("productImageLocation", jTextFieldOtherImageLocation.getText().replaceAll("\\\\", "\\\\\\\\"));
                 }
                 values.put("productSerialNumber", jTextFieldOtherSerialNumber.getText());
-
+                //</editor-fold>
             } else {
-                jLabelStatus.setText("No tab seletced");
+                JOptionPane.showMessageDialog(this, "No tab selected.", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
             //columns string indicates which columns to send to the database (only sending non-empty values)
@@ -481,8 +476,13 @@ public class AddProductWindow extends Window {
             columns = columns.substring(0, columns.length() - 2);
             columns += ") ";
             //SQL query that will be excuted being sent to insert method from Database clase
+            try {
             insert("INSERT INTO " + values.get("tableName") + columns + "VALUES(", values, columnsArr);
-            jLabelStatus.setText("Added successfully!");
+            }
+            catch(SQLException e) {
+                throw e;
+            }
+            JOptionPane.showMessageDialog(this, "Added successfully!", "Product Added Successfully", JOptionPane.INFORMATION_MESSAGE);
             if ("medicine".equals(values.get("tableName"))) {
                 Database.refreshMedicinesArrayList();
                 parent.refreshMedicineTable();
@@ -492,11 +492,9 @@ public class AddProductWindow extends Window {
             }
 
         } catch (NumberFormatException | SQLException e) {
-            jLabelStatus.setText(e.getMessage());
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            jLabelStatus.setText(e.getMessage());
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(this, e.getMessage(), "Incomplete Data", JOptionPane.ERROR_MESSAGE);
         }
@@ -538,9 +536,7 @@ public class AddProductWindow extends Window {
         }
     }//GEN-LAST:event_jButtonOtherBrowseActionPerformed
 
-    //DATABASE RELATED!!
     public void insert(String insertQuery, Map<String, String> values, java.util.ArrayList<String> columns) throws SQLException {
-        try {
             for (String k : columns) {
                 try {
                     Double.parseDouble(values.get(k));
@@ -553,10 +549,6 @@ public class AddProductWindow extends Window {
             insertQuery += ");";
             System.out.println(insertQuery);
             Database.insert(insertQuery);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            jLabelStatus.setText(e.getMessage());
-        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -580,7 +572,6 @@ public class AddProductWindow extends Window {
     private javax.swing.JLabel jLabelOtherPrice;
     private javax.swing.JLabel jLabelOtherSerialNumber;
     private javax.swing.JLabel jLabelOtherStock;
-    private javax.swing.JLabel jLabelStatus;
     private javax.swing.JLabel jLabelTitle;
     private javax.swing.JPanel jPanelBottom;
     private javax.swing.JPanel jPanelMain;

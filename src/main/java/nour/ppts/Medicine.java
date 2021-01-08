@@ -10,12 +10,11 @@ public class Medicine extends Product {
     private String location, activeSub;
     private double dose;
 
-    public static int numberOfAttributes = 9;
+    public static final int numberOfAttributes = 9;
     public static ArrayList<Medicine> allMedicines = new ArrayList<>();
     public static String[] attributeNames = {"medicineID", "medicineName", "medicineActiveSub", "medicinePrice",
         "medicineStock", "medicineImageLocation", "medicineDose", "medicineSerialNumber", "medicineLocation"};
 
-    //
     Medicine(ResultSet rs, int index) {
         setData(rs, index);
         initializeIfNotInitialized();
@@ -93,5 +92,4 @@ public class Medicine extends Product {
         arr[8] = getLocation();
         return arr;
     }
-
 }
