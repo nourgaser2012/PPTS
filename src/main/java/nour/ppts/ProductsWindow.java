@@ -4,6 +4,7 @@ package nour.ppts;
 import java.util.ArrayList;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
@@ -270,7 +271,7 @@ public class ProductsWindow extends Window {
             case 0 -> {
                 if (jTableMedicine.getSelectedRowCount() == 1) {
                     int id = Integer.parseInt(medicineTableModel.getValueAt(jTableMedicine.getSelectedRow(), 0).toString());
-                    for (var medicine : Medicine.allMedicines) {
+                    for (Medicine medicine : Medicine.allMedicines) {
                         if (medicine.getId() == id) {
                             PrintWindow w = new PrintWindow(this, medicine);
                             break;
@@ -289,7 +290,7 @@ public class ProductsWindow extends Window {
             case 1 -> {
                 if (jTableOther.getSelectedRowCount() == 1) {
                     int id = Integer.parseInt(otherTableModel.getValueAt(jTableOther.getSelectedRow(), 0).toString());
-                    for (var product : OtherProduct.allOtherProducts) {
+                    for (OtherProduct product : OtherProduct.allOtherProducts) {
                         if (product.getId() == id) {
                             PrintWindow w = new PrintWindow(this, product);
                             break;
@@ -315,7 +316,7 @@ public class ProductsWindow extends Window {
         if (jTabbedPane.getSelectedIndex() == 0) {
             if (!jTextFieldSearch.getText().isEmpty()) {
                 DefaultTableModel newModel = initTableModel(medicineColumns);
-                for (var v : medicineTableModel.getDataVector()) {
+                for (Vector v : medicineTableModel.getDataVector()) {
                     if (v.get(0).equals(search) || v.get(v.size() - 1).toString().contains(search) || v.get(1).toString().contains(search)) {
                         newModel.addRow(v);
                     }
@@ -327,7 +328,7 @@ public class ProductsWindow extends Window {
         } else {
             if (!jTextFieldSearch.getText().isEmpty()) {
                 DefaultTableModel newModel = initTableModel(otherColumns);
-                for (var v : otherTableModel.getDataVector()) {
+                for (Vector v : otherTableModel.getDataVector()) {
                     if (v.get(0).equals(search) || v.get(v.size() - 2).toString().contains(search) || v.get(1).toString().contains(search)) {
                         newModel.addRow(v);
                     }

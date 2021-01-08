@@ -49,7 +49,7 @@ public final class Database {
     static void remove(String tableName, int id) throws SQLException {
         Connection conn = DriverManager.getConnection(url, username, password);
         PreparedStatement st;
-        if (tableName == "receipts") {
+        if ("receipts".equals(tableName)) {
             st = conn.prepareStatement("DELETE FROM " + tableName + " WHERE " + "receiptID = " + id + ";");
             Database.refreshReceiptsArrayList();
         } else {

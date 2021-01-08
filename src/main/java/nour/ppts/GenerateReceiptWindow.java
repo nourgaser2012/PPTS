@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 import javax.swing.ImageIcon;
 import static nour.ppts.Database.dateFormat;
 
@@ -378,9 +379,9 @@ public class GenerateReceiptWindow extends Window {
                             }
 
                             tableModel.addRow(data);
-                            jTextFieldNumberOfItems.setText(String.valueOf(Integer.parseInt(String.valueOf((Integer.parseInt(jTextFieldNumberOfItems.getText()) + 1)))));
+                            jTextFieldNumberOfItems.setText(String.valueOf(Integer.parseInt(jTextFieldNumberOfItems.getText()) + 1));
                             Double total = 0.0;
-                            for (var v : tableModel.getDataVector()) {
+                            for (Vector v : tableModel.getDataVector()) {
                                 total += Double.parseDouble(v.get(3).toString());
                             }
                             jTextFieldTotal.setText(String.valueOf(total));
@@ -413,9 +414,9 @@ public class GenerateReceiptWindow extends Window {
                             }
 
                             tableModel.addRow(data);
-                            jTextFieldNumberOfItems.setText(String.valueOf(Integer.parseInt(jTextFieldNumberOfItems.getText() + 1)));
+                            jTextFieldNumberOfItems.setText(String.valueOf(Integer.parseInt(jTextFieldNumberOfItems.getText()) + 1));
                             Double total = 0.0;
-                            for (var v : tableModel.getDataVector()) {
+                            for (Vector v : tableModel.getDataVector()) {
                                 total += Double.parseDouble(v.get(3).toString());
                             }
                             jTextFieldTotal.setText(String.valueOf(total));
@@ -438,6 +439,7 @@ public class GenerateReceiptWindow extends Window {
 
     private void jButtonRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveActionPerformed
         // TODO add your handling code here:
+        tableModel.removeRow(jTableProductsTable.getSelectedRow());
     }//GEN-LAST:event_jButtonRemoveActionPerformed
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed

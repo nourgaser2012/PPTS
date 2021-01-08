@@ -9,6 +9,7 @@ package nour.ppts;
 import java.util.ArrayList;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
@@ -248,7 +249,7 @@ public class ReceiptsWindow extends Window {
         String search = jTextFieldSearch.getText();
         if (!jTextFieldSearch.getText().isEmpty()) {
             DefaultTableModel newModel = initTableModel(tableColumns);
-            for (var v : tableModel.getDataVector()) {
+            for (Vector v : tableModel.getDataVector()) {
                 if (v.get(0).equals(search) || v.get(v.size() - 1).toString().contains(search) || v.get(1).toString().contains(search) || v.get(2).toString().contains(search)) {
                     newModel.addRow(v);
                 }
@@ -269,7 +270,7 @@ public class ReceiptsWindow extends Window {
         // TODO add your handling code here:
         if (jTableReceipts.getSelectedRowCount() == 1) {
             int id = Integer.parseInt(tableModel.getValueAt(jTableReceipts.getSelectedRow(), 0).toString());
-            for (var receipt : Receipt.allReceipts) {
+            for (Receipt receipt : Receipt.allReceipts) {
                 if (receipt.getId() == id) {
                     PrintWindow w = new PrintWindow(this, receipt);
                     break;

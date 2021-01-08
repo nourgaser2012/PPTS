@@ -5,27 +5,20 @@
  */
 package nour.ppts;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.BoxLayout;
+import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
+import static nour.ppts.Database.dateFormat;
 
-/**
- *
- * @author GPC
- */
 public class PrintWindow extends Window implements Printable {
 
     private ProductsWindow productsWindowParent;
@@ -386,9 +379,10 @@ public class PrintWindow extends Window implements Printable {
     @Override
     public void printOne(Receipt receipt) {
         JLabel id = new JLabel("ID: " + Integer.toString(receipt.getId()), SwingConstants.CENTER);
-        JLabel numberOfItems = new JLabel("Number of items: " + Integer.toString(receipt.getId()), SwingConstants.CENTER);
-        JLabel total = new JLabel("ID: " + Double.toString(receipt.getTotal()), SwingConstants.CENTER);
-        JLabel date = new JLabel("Date: " + receipt.getDate().toString(), SwingConstants.CENTER);
+        JLabel numberOfItems = new JLabel("Number of items: " + Integer.toString(receipt.getNumberOfItems()), SwingConstants.CENTER);
+        JLabel total = new JLabel("Total: " + Double.toString(receipt.getTotal()), SwingConstants.CENTER);
+        SimpleDateFormat simpleDateFormatter = new SimpleDateFormat(dateFormat);
+        JLabel date = new JLabel("Date: " + simpleDateFormatter.format(receipt.getDate()), SwingConstants.CENTER);
         JLabel customerName = new JLabel("Customer name: " + receipt.getCustomerName(), SwingConstants.CENTER);
         JLabel items = new JLabel("Items: " + receipt.getDbItemsString(), SwingConstants.CENTER);
 
